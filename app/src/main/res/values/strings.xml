@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Clue-Less</string>
+    <string name="green">Baron Green</string>
+    <string name="blue">Lady Peacock</string>
+    <string name="white">Madam White</string>
+    <string name="red">Lady Scarlet</string>
+    <string name="purple">Dr. Plum</string>
+    <string name="yellow">General Mustard</string>
 </resources>

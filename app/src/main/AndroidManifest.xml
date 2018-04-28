@@ -21,7 +21,8 @@
             android:name=".GameBoard"
             android:label="@string/title_activity_game_board"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".InvestigationPadActivity"></activity>
+        <activity android:name=".InvestigationPadActivity" />
+        <activity android:name=".StartOfGame"></activity>
     </application>
 
 </manifest>

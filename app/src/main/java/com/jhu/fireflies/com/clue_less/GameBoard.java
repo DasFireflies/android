@@ -82,8 +82,16 @@ public class GameBoard extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_investigationPad) {
+
             Intent i = (Intent) new Intent(GameBoard.this,
                     InvestigationPadActivity.class);
+            startActivity(i);
+
+        } else if (id == R.id.nav_startOfGame) {
+
+            Intent i = (Intent) new Intent(GameBoard.this,
+                    StartOfGame.class);
+
             startActivity(i);
         }
 

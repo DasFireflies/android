@@ -114,7 +114,7 @@ public class LobbyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LobbyActivity.this,
-                        GameBoard.class);
+                        StartOfGame.class);
 
                 startActivity(intent);
             }

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jhu.fireflies.com.clue_less.StartOfGame">
+
+    <TextView
+        android:id="@+id/startOfGameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="START OF GAME"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:id="@+id/startGameText"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/startOfGameMessage"
+        app:layout_constraintTop_toBottomOf="@id/startOfGameTitle"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:id="@+id/player1Start"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Player 1"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/startGameText"
+        android:layout_marginTop="50dp"/>
+    <TextView
+        android:id="@+id/player2Start"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Player 2"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/player1Start"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/player3Start"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Player 3"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/player2Start"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/player4Start"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Player 4"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/player3Start"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/player5Start"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Player 5"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/player4Start"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/player6Start"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Player 6"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/player5Start"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/startOfGameClose"
+        app:layout_constraintTop_toBottomOf="@id/player6Start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="Ok!" />
+
+</android.support.constraint.ConstraintLayout>

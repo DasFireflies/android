@@ -5,11 +5,11 @@
 
     <group android:checkableBehavior="single">ß
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_startOfGame"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Secret Folder" />
+            android:title="Start of Game" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_suggestion"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Make Suggestion" />
         <item
@@ -21,7 +21,7 @@
     <item android:title="End Game">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_acuse"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Make Accusation" />
         </menu>

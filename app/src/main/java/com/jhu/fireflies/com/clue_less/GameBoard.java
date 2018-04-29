@@ -93,6 +93,16 @@ public class GameBoard extends AppCompatActivity
                     StartOfGame.class);
 
             startActivity(i);
+        } else if (id == R.id.nav_suggestion) {
+            Intent i = (Intent) new Intent(GameBoard.this,
+                    SuggestionAccusationActivity.class);
+            i.putExtra("suggestAccuse", 1);
+            startActivity(i);
+        } else if (id == R.id.nav_acuse) {
+            Intent i = (Intent) new Intent(GameBoard.this,
+                    SuggestionAccusationActivity.class);
+            i.putExtra("suggestAccuse", 2);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

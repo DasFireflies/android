@@ -16,4 +16,20 @@
     <string name="startOfGameMessage">A room, suspect, and weapon card have been placed inside the secret folder...</string>
 
     <string name="action_settings">Settings</string>
+    <string-array name="suspects">
+        <item>Baron Green</item>
+        <item>Lady Peacock</item>
+        <item>Madam White</item>
+        <item>Lady Scarlet</item>
+        <item>Dr. Plum</item>
+        <item>General Mustard</item>
+    </string-array>
+    <string-array name="weapons">
+        <item>Rope</item>
+        <item>Lead Pipe</item>
+        <item>Knife</item>
+        <item>Wrench</item>
+        <item>Candlestick</item>
+        <item>Revolver</item>
+    </string-array>
 </resources>

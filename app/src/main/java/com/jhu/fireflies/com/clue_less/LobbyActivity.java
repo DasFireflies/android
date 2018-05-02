@@ -125,6 +125,11 @@ public class LobbyActivity extends AppCompatActivity {
         Button startGame = (Button) findViewById(R.id.startGame);
         startGame.setVisibility(View.INVISIBLE);
     }
+
+    public void testNetwork(View view){
+        BackendHandler backendHandler = BackendHandlerReference.getBackendHandler();
+        backendHandler.execute("test");
+    }
 }
 
 

@@ -103,4 +103,11 @@
         android:text="@string/characterSelectReady"
         android:id="@+id/characterSelectButton"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:onClick="testNetwork"/>
+
 </android.support.constraint.ConstraintLayout>

@@ -7,6 +7,16 @@ package com.jhu.fireflies.com.clue_less;
 public class BackendHandlerReference {
     private static  BackendHandler backendHandler;
 
+    private static String serverLog;
+
+    public static String getServerLog(){
+        return serverLog;
+    }
+
+    public static void addToServerLog(String command, String who){
+        BackendHandlerReference.serverLog = who + ": " + command + "\n" + BackendHandlerReference.serverLog;
+    }
+
     public static  synchronized  BackendHandler getBackendHandler(){
         return backendHandler;
     }

@@ -128,7 +128,7 @@ public class LobbyActivity extends AppCompatActivity {
 
     public void testNetwork(View view){
         BackendHandler backendHandler = BackendHandlerReference.getBackendHandler();
-        backendHandler.execute("test");
+        backendHandler.sendMessage("hello");
     }
 }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jhu.fireflies.com.clue_less">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -25,7 +26,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".InvestigationPadActivity" />
         <activity android:name=".StartOfGame" />
-        <activity android:name=".SuggestionAccusationActivity"></activity>
+        <activity android:name=".SuggestionAccusationActivity" />
+        <activity android:name=".TextBased"></activity>
     </application>
 
 </manifest>

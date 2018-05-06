@@ -2,6 +2,7 @@ package com.jhu.fireflies.com.clue_less;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Message;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,7 +41,13 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
 
-        final Handler handler = new Handler();
+        Handler handler = new Handler(){
+          @Override
+            public void handleMessage(Message msg){
+              Log.d("Received Message", "handleMessage: " + msg.getData().getString("receivedMsg"));
+              BackendHandlerReference.addToServerLog(msg.getData().getString("receivedMsg"), "server");
+          }
+        };
         BackendHandler backendHandler = new BackendHandler(handler);
 
         BackendHandlerReference.setBackendHandler(backendHandler);
@@ -55,6 +62,13 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void onTextBasedClicked(View view){
+        Intent intent = new Intent(MainMenuActivity.this,
+                TextBased.class);
+
+        startActivity(intent);
     }
 
 }

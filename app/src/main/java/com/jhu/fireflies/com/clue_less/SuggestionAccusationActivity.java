@@ -64,5 +64,6 @@ public class SuggestionAccusationActivity extends AppCompatActivity {
     private void setRoom(String roomName){
         TextView roomLabel = (TextView) findViewById(R.id.roomLabelText);
         roomLabel.setText(roomName);
+
     }
 }

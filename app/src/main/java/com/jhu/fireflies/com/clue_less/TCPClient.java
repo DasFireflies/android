@@ -1,5 +1,7 @@
 package com.jhu.fireflies.com.clue_less;
 
+import android.app.IntentService;
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.webkit.WebMessagePort;
@@ -17,7 +19,7 @@ import java.net.Socket;
  * Code is from https://github.com/codepath/android_guides/wiki/Sending-and-Receiving-Data-with-Sockets
  */
 
-public class TCPClient {
+public class TCPClient{
     private static final String            TAG             = "TCPClient"     ;
     private final Handler mHandler                          ;
     private              String            ipNumber, incomingMessage, command;
@@ -25,6 +27,7 @@ public class TCPClient {
     PrintWriter out                               ;
     private             MessageCallback listener        = null            ;
     private              boolean           mRun            = false           ;
+    private Socket socket;
 
 
     /**
@@ -54,6 +57,10 @@ public class TCPClient {
             Log.d(TAG, "Sent Message: " + message);
 
         }
+    }
+
+    public void setCommand(String message){
+        command = message;
     }
 
     /**
@@ -86,12 +93,6 @@ public class TCPClient {
 
             Log.d(TAG, "Connecting...");
 
-            /**
-             * Sending empty message with static int value from MainActivity
-             * to update UI ( 'Connecting...' ).
-             *
-             * @see com.example.turnmeoff.MainActivity.CONNECTING
-             */
             //mHandler.sendEmptyMessageDelayed(Main.CONNECTING,1000);
 
             /**
@@ -100,7 +101,7 @@ public class TCPClient {
              *
              * @see com.example.turnmeoff.IpGetter
              */
-            Socket socket = new Socket(serverAddress, 5000);
+            socket = new Socket(serverAddress, 5000);
 
 
             try {
@@ -113,14 +114,17 @@ public class TCPClient {
 
                 Log.d(TAG, "In/Out created");
 
-                //Sending message with command specified by AsyncTask
-                this.sendMessage(command);
+
 
                 //
                 //mHandler.sendEmptyMessageDelayed(MainActivity.SENDING,2000);
 
                 //Listen for the incoming messages while mRun = true
                 while (mRun) {
+
+
+                   this.sendMessage(command);
+
                     incomingMessage = in.readLine();
                     if (incomingMessage != null && listener != null) {
 

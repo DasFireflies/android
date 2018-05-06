@@ -1,7 +1,11 @@
 package com.jhu.fireflies.com.clue_less;
 
+import android.app.IntentService;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ public class BackendHandler extends AsyncTask<String, String, TCPClient> {
     private Handler mHandler                         ;
     private static final String     TAG         = "ShutdownAsyncTask";
 
+    int count = 0;
     /**
      * ShutdownAsyncTask constructor with handler passed as argument. The UI is updated via handler.
      * In doInBackground(...) method, the handler is passed to TCPClient object.
@@ -35,6 +40,7 @@ public class BackendHandler extends AsyncTask<String, String, TCPClient> {
     public BackendHandler(Handler mHandler){
         this.mHandler = mHandler;
     }
+
 
     /**
      * Overriden method from AsyncTask class. There the TCPClient object is created.
@@ -53,6 +59,12 @@ public class BackendHandler extends AsyncTask<String, String, TCPClient> {
                     new TCPClient.MessageCallback() {
                         @Override
                         public void callbackMessageReceiver(String message) {
+                            Message msg = new Message();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("receivedMsg", message);
+                            msg.setData(bundle);
+                            mHandler.sendMessage(msg);
+
                             Log.d("PLEASE WORK", "callbackMessageReceiver: " + message);
                             publishProgress(message);
                         }
@@ -73,7 +85,7 @@ public class BackendHandler extends AsyncTask<String, String, TCPClient> {
      */
     @Override
     protected void onProgressUpdate(String... values) {
-        super.onProgressUpdate(values);
+        //super.onProgressUpdate(values);
         Log.d(TAG, "In progress update, values: " + values.toString());
         /*if(values[0].equals("shutdown")){
             tcpClient.sendMessage(COMMAND);
@@ -87,9 +99,17 @@ public class BackendHandler extends AsyncTask<String, String, TCPClient> {
         }*/
     }
 
+    public void sendMessage(String message){
+        tcpClient.setCommand(message);
+        count ++;
+        if(count>3){
+            tcpClient.stopClient();
+        }
+    }
+
     @Override
     protected void onPostExecute(TCPClient result){
-        super.onPostExecute(result);
+      //  super.onPostExecute(result);
         Log.d(TAG, "In on post execute");
        /* if(result != null && result.isRunning()){
             result.stopClient();

@@ -27,7 +27,8 @@
         <activity android:name=".InvestigationPadActivity" />
         <activity android:name=".StartOfGame" />
         <activity android:name=".SuggestionAccusationActivity" />
-        <activity android:name=".TextBased"></activity>
+        <activity android:name=".TextBased" />
+        <activity android:name=".InitialClues"></activity>
     </application>
 
 </manifest>

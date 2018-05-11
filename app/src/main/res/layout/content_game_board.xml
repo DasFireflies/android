@@ -4,8 +4,576 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/testboard"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jhu.fireflies.com.clue_less.GameBoard"
-    tools:showIn="@layout/app_bar_game_board">
+    tools:showIn="@layout/game_board_layout">
 
+    <!-- Defining game board -->
+    <Button
+        android:id="@+id/kitchen"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.732"
+        app:layout_constraintStart_toEndOf="@+id/ballrom"
+        app:layout_constraintTop_toBottomOf="@+id/dining_room"
+        app:layout_constraintVertical_bias="0.413"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/conservatory"
+        android:layout_width="68dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ballrom"
+        app:layout_constraintHorizontal_bias="0.294"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/library"
+        app:layout_constraintVertical_bias="0.41" />
+
+    <Button
+        android:id="@+id/great_hall"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/billiard_room"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.663" />
+
+    <Button
+        android:id="@+id/ballrom"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/billiard_room"
+        app:layout_constraintVertical_bias="0.413" />
+
+    <Button
+        android:id="@+id/dining_room"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.732"
+        app:layout_constraintStart_toEndOf="@+id/billiard_room"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.534" />
+
+    <Button
+        android:id="@+id/library"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/billiard_room"
+        app:layout_constraintHorizontal_bias="0.297"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.536" />
+
+    <Button
+        android:id="@+id/billiard_room"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.534" />
+
+    <Button
+        android:id="@+id/lounge"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/dining_room"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.732"
+        app:layout_constraintStart_toEndOf="@+id/great_hall"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.663" />
+
+    <Button
+        android:id="@+id/study"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:color/darker_gray"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/library"
+        app:layout_constraintEnd_toStartOf="@+id/great_hall"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.66" />
+
+    <Button
+        android:id="@+id/hall1"
+        android:layout_width="74dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/hall3"
+        app:layout_constraintEnd_toStartOf="@+id/testView2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/study"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.642"/>
+
+    <Button
+        android:id="@+id/hall2"
+        android:layout_width="74dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/hall4"
+        app:layout_constraintEnd_toStartOf="@+id/lounge"
+        app:layout_constraintStart_toEndOf="@+id/great_hall"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645" />
+
+    <Button
+        android:id="@+id/hall3"
+        android:layout_width="74dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/billiard_room"
+        app:layout_constraintStart_toEndOf="@+id/library"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <Button
+        android:id="@+id/hall4"
+        android:layout_width="74dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dining_room"
+        app:layout_constraintStart_toEndOf="@+id/billiard_room"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.528" />
+
+    <Button
+        android:id="@+id/hall5"
+        android:layout_width="74dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ballrom"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toEndOf="@+id/conservatory"
+        app:layout_constraintTop_toBottomOf="@+id/hall3"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <Button
+        android:id="@+id/hall6"
+        android:layout_width="74dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/kitchen"
+        app:layout_constraintStart_toEndOf="@+id/ballrom"
+        app:layout_constraintTop_toBottomOf="@+id/hall4"
+        app:layout_constraintVertical_bias="0.484" />
+
+    <Button
+        android:id="@+id/hall7"
+        android:layout_width="30dp"
+        android:layout_height="74dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/library"
+        app:layout_constraintEnd_toStartOf="@+id/hall8"
+        app:layout_constraintHorizontal_bias="0.282"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/study"
+        app:layout_constraintVertical_bias="0.888" />
+
+    <Button
+        android:id="@+id/hall8"
+        android:layout_width="30dp"
+        android:layout_height="74dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/billiard_room"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/great_hall"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/hall9"
+        android:layout_width="30dp"
+        android:layout_height="74dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/dining_room"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.731"
+        app:layout_constraintStart_toEndOf="@+id/hall8"
+        app:layout_constraintTop_toBottomOf="@+id/lounge"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/hall10"
+        android:layout_width="30dp"
+        android:layout_height="74dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/conservatory"
+        app:layout_constraintEnd_toStartOf="@+id/hall11"
+        app:layout_constraintHorizontal_bias="0.282"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/library"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/hall11"
+        android:layout_width="30dp"
+        android:layout_height="74dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/ballrom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/billiard_room"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/hall12"
+        android:layout_width="30dp"
+        android:layout_height="74dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:onClick="onRoomClick"
+        app:layout_constraintBottom_toTopOf="@+id/kitchen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.731"
+        app:layout_constraintStart_toEndOf="@+id/hall11"
+        app:layout_constraintTop_toBottomOf="@+id/dining_room"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room1"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/hall7"
+        app:layout_constraintEnd_toEndOf="@+id/study"
+        app:layout_constraintStart_toStartOf="@+id/study"
+        app:layout_constraintTop_toTopOf="@+id/study" />
+
+    <TextView
+        android:id="@+id/testView2"
+        android:layout_width="66dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room2"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/hall8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/great_hall" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room3"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/hall9"
+        app:layout_constraintEnd_toEndOf="@+id/lounge"
+        app:layout_constraintStart_toStartOf="@+id/lounge"
+        app:layout_constraintTop_toTopOf="@+id/lounge" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room4"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/hall10"
+        app:layout_constraintEnd_toStartOf="@+id/hall3"
+        app:layout_constraintStart_toStartOf="@+id/library"
+        app:layout_constraintTop_toBottomOf="@+id/hall7" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="51dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room5"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/hall11"
+        app:layout_constraintEnd_toStartOf="@+id/hall4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/hall3"
+        app:layout_constraintTop_toBottomOf="@+id/hall8"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="60dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room6"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/hall12"
+        app:layout_constraintEnd_toEndOf="@+id/dining_room"
+        app:layout_constraintStart_toEndOf="@+id/hall4"
+        app:layout_constraintTop_toBottomOf="@+id/hall9" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="53dp"
+        android:layout_height="39dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room7"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/conservatory"
+        app:layout_constraintEnd_toStartOf="@+id/hall5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/conservatory"
+        app:layout_constraintTop_toBottomOf="@+id/hall10"
+        app:layout_constraintVertical_bias="0.266" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room8"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/ballrom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hall11"
+        app:layout_constraintVertical_bias="0.433" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="@string/room9"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/kitchen"
+        app:layout_constraintEnd_toEndOf="@+id/kitchen"
+        app:layout_constraintStart_toEndOf="@+id/hall6"
+        app:layout_constraintTop_toBottomOf="@+id/hall12" />
+
+    <!-- Defining game characters -->
+
+    <ImageView
+        android:id="@+id/baron_green"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@color/green"
+        android:elevation="2dp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/lady_peacock"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@color/blue"
+        android:elevation="2dp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/madam_white"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="#f9f7f6"
+        android:elevation="2dp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/lady_scarlet"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@color/red"
+        android:elevation="2dp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/dr_plum"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@color/purple"
+        android:elevation="2dp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/general_mustard"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@color/yellow"
+        android:elevation="2dp"
+        android:visibility="visible" />
+
+    <!-- Defining finish button-->
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/holo_green_dark"
+        android:text="@string/finished"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/great_hall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

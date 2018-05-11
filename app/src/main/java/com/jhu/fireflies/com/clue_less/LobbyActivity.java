@@ -1,6 +1,8 @@
 package com.jhu.fireflies.com.clue_less;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,17 +10,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class LobbyActivity extends AppCompatActivity {
     private int characterIndex;
     private RadioGroup characterOption;
     private Button characterSelectButton;
     private boolean playerReady;
+    private BackendHandler backendHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lobby_layout);
+
+        backendHandler = BackendHandlerReference.getBackendHandler();
+
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String msgFromServer = (String) msg.getData().get("messageFromServer");
+                Toast.makeText(LobbyActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        backendHandler.setLobbyHandler(handler);
 
         playerReady = false;
 
@@ -35,6 +52,7 @@ public class LobbyActivity extends AppCompatActivity {
 
                 toggleReadyButton();
 
+                Toast.makeText(getApplicationContext(), selectedCharacter.getText(), Toast.LENGTH_SHORT).show();
                 /*selectedCharacter.setText("Selected Character");
                 disableCharacterSelect();
                 disbableAllCharacterSelection();*/
@@ -127,8 +145,9 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     public void testNetwork(View view){
-        BackendHandler backendHandler = BackendHandlerReference.getBackendHandler();
-        backendHandler.sendMessage("hello");
+        backendHandler.sendMessage("send from lobby");
+       // BackendHandler backendHandler = BackendHandlerReference.getBackendHandler();
+       // backendHandler.sendMessage("hello");
     }
 }
 

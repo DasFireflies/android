@@ -9,7 +9,8 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_game_board"
+        layout="@layout/content_game_board"
+        android:id="@+id/contentBoard"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

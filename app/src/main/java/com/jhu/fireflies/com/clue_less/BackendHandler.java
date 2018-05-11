@@ -1,121 +1,178 @@
 package com.jhu.fireflies.com.clue_less;
 
 import android.app.IntentService;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
 /**
  * Created by Shawn on 4/29/18.
+ * some code from https://stackoverflow.com/questions/13760332/socket-read-and-write-threads
  */
 
-public class BackendHandler extends AsyncTask<String, String, TCPClient> {
+public class BackendHandler {
+
+    private Socket socket;
+    private Handler gameboardHandler;
+    private Handler MainMenuHandler;
+    private Handler lobbyHandler;
 
 
-            //socket = new Socket("18.188.114.251", 5000);
-            private static final String     COMMAND     = "test"      ;
-    private              TCPClient  tcpClient                        ;
-    private Handler mHandler                         ;
-    private static final String     TAG         = "ShutdownAsyncTask";
+    public BackendHandler(){
 
-    int count = 0;
-    /**
-     * ShutdownAsyncTask constructor with handler passed as argument. The UI is updated via handler.
-     * In doInBackground(...) method, the handler is passed to TCPClient object.
-     * @param mHandler Handler object that is retrieved from MainActivity class and passed to TCPClient
-     *                 class for sending messages and updating UI.
-     */
-    public BackendHandler(Handler mHandler){
-        this.mHandler = mHandler;
+        Thread readerThread = new Thread(new ReaderRunnable(socket));
+        readerThread.start();
+
+
     }
 
+    public void setGameboardHandler(Handler in){gameboardHandler = in;}
+    public void setMainMenuHandler(Handler in){MainMenuHandler = in;}
+    public void setLobbyHandler(Handler in){lobbyHandler = in;}
 
-    /**
-     * Overriden method from AsyncTask class. There the TCPClient object is created.
-     * @param params From MainActivity class empty string is passed.
-     * @return TCPClient object for closing it in onPostExecute method.
-     */
-    @Override
-    protected TCPClient doInBackground(String... params) {
-        Log.d(TAG, "In do in background");
+    public void sendMessage(String s){
 
-        try {
+        Thread writerThread = new Thread(new WriteRunnable(socket));
+        writerThread.start();
+    }
 
-            tcpClient = new TCPClient(mHandler,
-                    COMMAND,
-                    "10.0.0.184",
-                    new TCPClient.MessageCallback() {
-                        @Override
-                        public void callbackMessageReceiver(String message) {
-                            Message msg = new Message();
-                            Bundle bundle = new Bundle();
-                            bundle.putString("receivedMsg", message);
-                            msg.setData(bundle);
-                            mHandler.sendMessage(msg);
+    // You can put this class outside activity with public scope
+    class ReaderRunnable implements Runnable {
+        Socket socket;
 
-                            Log.d("PLEASE WORK", "callbackMessageReceiver: " + message);
-                            publishProgress(message);
+        public ReaderRunnable(Socket socket) {
+            this.socket = socket;
+        }
+
+        @Override
+        public void run() {
+            try{
+                socket = new Socket("10.0.0.184", 5000);
+                //socket = new Socket("18.188.114.251", 5000);
+                BackendHandlerReference.setSocket(socket);
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+            if (socket != null && socket.isConnected()) {
+                try {
+                    PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                    out.println();
+                    out.flush();
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+
+                    boolean end = false;
+                    while (!end) {
+                        while (!in.ready()) {
+                            try {
+                                Thread.sleep(50);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    });
 
-        } catch (NullPointerException e) {
-            Log.d(TAG, "Caught null pointer exception");
-            e.printStackTrace();
+                        String response = in.readLine();
+                        if(response == "end"){
+                            end = true;
+                        }
+
+                        //send message to all handlers
+                        Message msg = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("messageFromServer", response);
+                        msg.setData(bundle);
+
+                        if(gameboardHandler != null){
+                            gameboardHandler.sendMessage(msg);
+                        }
+
+                        Message msgMain = new Message();
+                        Bundle bundleMain = new Bundle();
+                        bundleMain.putString("messageFromServer", response);
+                        msgMain.setData(bundleMain);
+                        if(MainMenuHandler != null){
+                            MainMenuHandler.sendMessage(msgMain);
+                        }
+
+                        Message msgLobby = new Message();
+                        Bundle bundleLobby = new Bundle();
+                        bundleLobby.putString("messageFromServer", response);
+                        msg.setData(bundleLobby);
+                        if(lobbyHandler != null){
+                            lobbyHandler.sendMessage(msgLobby);
+                        }
+
+
+                        //Do reader code
+                        Log.d("BackendHandler", "Reader: " + response);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                //Handle error case
+            }
         }
-        tcpClient.run();
-        return null;
+
+
     }
 
-    /**
-     * Overriden method from AsyncTask class. Here we're checking if server answered properly.
-     * @param values If "restart" message came, the client is stopped and computer should be restarted.
-     *               Otherwise "wrong" message is sent and 'Error' message is shown in UI.
-     */
-    @Override
-    protected void onProgressUpdate(String... values) {
-        //super.onProgressUpdate(values);
-        Log.d(TAG, "In progress update, values: " + values.toString());
-        /*if(values[0].equals("shutdown")){
-            tcpClient.sendMessage(COMMAND);
-            tcpClient.stopClient();
-            mHandler.sendEmptyMessageDelayed(MainActivity.SHUTDOWN, 2000);
+    // You can put this class outside activity with public scope
+    class WriteRunnable implements Runnable {
+        Socket socket;
 
-        }else{
-            tcpClient.sendMessage("wrong");
-            mHandler.sendEmptyMessageDelayed(MainActivity.ERROR, 2000);
-            tcpClient.stopClient();
-        }*/
-    }
+        public WriteRunnable(Socket socket) {
+            this.socket = socket;
+        }
 
-    public void sendMessage(String message){
-        tcpClient.setCommand(message);
-        count ++;
-        if(count>3){
-            tcpClient.stopClient();
+        @Override
+        public void run() {
+            this.socket = BackendHandlerReference.getSocket();
+
+            if (socket != null && socket.isConnected()) {
+                try {
+                    //Do writer code
+                    PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+
+                    out.println();
+                    out.flush();
+                    Log.d("BackendHandler", "writerThread: this worked");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                //Handle error case
+                Log.d("BackendHandler", "writerThread: socket null");
+            }
+            return;
         }
     }
 
-    @Override
-    protected void onPostExecute(TCPClient result){
-      //  super.onPostExecute(result);
-        Log.d(TAG, "In on post execute");
-       /* if(result != null && result.isRunning()){
-            result.stopClient();
-        }
-        mHandler.sendEmptyMessageDelayed(MainActivity.SENT, 4000);*/
-
-    }
 
 }

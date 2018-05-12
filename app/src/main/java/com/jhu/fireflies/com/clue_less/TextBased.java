@@ -18,13 +18,10 @@ public class TextBased extends AppCompatActivity {
 
         backendHandler = BackendHandlerReference.getBackendHandler();
 
-        responses = "test";
+        responses = BackendHandlerReference.getServerLog();
         TextView responseHistory = (TextView) findViewById(R.id.serverResponsesHistory);
         responseHistory.setText(responses);
 
-        responses = "test\n" + responses;
-
-        responseHistory.setText(responses);
     }
 
     public void sendToServer(View view){

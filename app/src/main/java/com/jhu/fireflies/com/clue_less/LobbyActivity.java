@@ -1,6 +1,8 @@
 package com.jhu.fireflies.com.clue_less;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -33,6 +35,15 @@ public class LobbyActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 String msgFromServer = (String) msg.getData().get("messageFromServer");
                 Toast.makeText(LobbyActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
+
+                //if someone else hits start button
+                if(msgFromServer == "startgame"){
+                    Intent intent = new Intent(LobbyActivity.this,
+                            StartOfGame.class);
+
+                    startActivity(intent);
+                    finish();
+                }
 
 
                 int serverResponse;
@@ -75,6 +86,10 @@ public class LobbyActivity extends AppCompatActivity {
 
                 backendHandler.sendMessage("" +characterIndex);
                 disbableAllCharacterSelection();
+
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("CharacterDetails", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("characterIndex", characterIndex);
 
             }
         });
@@ -163,6 +178,7 @@ public class LobbyActivity extends AppCompatActivity {
                         StartOfGame.class);
 
                 startActivity(intent);
+                finish();
             }
         });
     }

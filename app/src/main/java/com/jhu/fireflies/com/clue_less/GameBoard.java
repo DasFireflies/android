@@ -1,7 +1,11 @@
 package com.jhu.fireflies.com.clue_less;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
@@ -20,22 +24,70 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class GameBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // TODO store character information
+    private BackendHandler backendHandler;
+    private  SharedPreferences sharedPreferences;
     private String characterSelected = "Lady Peacock";
     private String characterPosition = "Study";
     HashMap<String, Integer> players = new HashMap<>();
     HashMap<String, Integer> rooms = new HashMap<>();
     HashMap<String, String> halls = new HashMap<>();
+    HashMap<String, String> positions = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_board_layout);
+
+        //Get reference to backend
+        backendHandler = BackendHandlerReference.getBackendHandler();
+
+        //handle responses from backend
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                //code to handle messages from server
+                String msgFromServer = (String) msg.getData().get("messageFromServer");
+                List<String> messageList = Arrays.asList(msgFromServer.split(","));
+
+                //return if message isn't for this acitivity
+                //check first index of messageList. If the number isn't relevant to this class, return.
+
+                //log messages
+                BackendHandlerReference.addToServerLog("Server", "Message");
+
+
+            }
+        };
+        backendHandler.setGameboardHandler(handler);
+
+        //send to server
+        backendHandler.sendMessage("send stuff");
+        //log messages
+        BackendHandlerReference.addToServerLog("Me", "Message");
+
+        //Get Character Index
+        sharedPreferences = getApplicationContext().getSharedPreferences("CharacterDetails", Context.MODE_PRIVATE);
+        int characterIndex = sharedPreferences.getInt("characterIndex", 0);
+        switch (characterIndex){
+            case 0: characterSelected = "Baron Green"; break;
+            case 1: characterSelected = "Lady Peacock"; break;
+            case 2: characterSelected = "Madam White"; break;
+            case 3: characterSelected = "Lady Scarlet"; break;
+            case 4: characterSelected = "Dr. Plum"; break;
+            case 5: characterSelected = "General Mustard"; break;
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -95,6 +147,8 @@ public class GameBoard extends AppCompatActivity
         halls.put("Hall 11", "None");
         halls.put("Hall 12", "None");
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -159,7 +213,10 @@ public class GameBoard extends AppCompatActivity
         }else if (id == R.id.nav_initialClues) {
             Intent i = (Intent) new Intent(GameBoard.this,
                     InitialClues.class);
-            i.putExtra("suggestAccuse", 2);
+            startActivity(i);
+        }else if (id == R.id.nav_activityLog) {
+            Intent i = (Intent) new Intent(GameBoard.this,
+                    TextBased.class);
             startActivity(i);
         }
 
@@ -488,6 +545,11 @@ public class GameBoard extends AppCompatActivity
             }
         }
 
+        //save room
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("characterRoom", room);
+        editor.commit();
+
         // Disables the room buttons
         disable(characterPosition);
 
@@ -587,5 +649,37 @@ public class GameBoard extends AppCompatActivity
     // Player notifications on what is occurring in the game
     public void notification(String notification){
         Toast.makeText(GameBoard.this, notification, Toast.LENGTH_SHORT).show();
+    }
+
+    private void saveMap(HashMap<String,String> inputMap){
+        SharedPreferences pSharedPref = getApplicationContext().getSharedPreferences("MyVariables", Context.MODE_PRIVATE);
+        if (pSharedPref != null){
+            JSONObject jsonObject = new JSONObject(inputMap);
+            String jsonString = jsonObject.toString();
+            SharedPreferences.Editor editor = pSharedPref.edit();
+            editor.remove("Positions").commit();
+            editor.putString("Positions", jsonString);
+            editor.commit();
+        }
+    }
+
+    private HashMap<String,String> loadMap(){
+        HashMap<String,String> outputMap = new HashMap<String,String>();
+        SharedPreferences pSharedPref = getApplicationContext().getSharedPreferences("MyVariables", Context.MODE_PRIVATE);
+        try{
+            if (pSharedPref != null){
+                String jsonString = pSharedPref.getString("Positions", (new JSONObject()).toString());
+                JSONObject jsonObject = new JSONObject(jsonString);
+                Iterator<String> keysItr = jsonObject.keys();
+                while(keysItr.hasNext()) {
+                    String key = keysItr.next();
+                    String value = (String) jsonObject.get(key);
+                    outputMap.put(key, value);
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return outputMap;
     }
 }

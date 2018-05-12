@@ -40,6 +40,11 @@ public class MainMenuActivity extends AppCompatActivity {
         joinGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /*Put code to reset all shared preferences to defaults
+                 *
+                 */
+
                 Intent intent = new Intent(MainMenuActivity.this,
                                            LobbyActivity.class);
 
@@ -63,54 +68,11 @@ public class MainMenuActivity extends AppCompatActivity {
         };
         backendHandler.setMainMenuHandler(handler);
 
-       /* Handler handler = new Handler(){
-          @Override
-            public void handleMessage(Message msg){
-              Log.d("Received Message", "handleMessage: " + msg.getData().getString("receivedMsg"));
-              BackendHandlerReference.addToServerLog(msg.getData().getString("receivedMsg"), "server");
-          }
-        };
-        BackendHandler backendHandler = new BackendHandler(handler);
-        BackendHandlerReference.setBackendHandler(backendHandler);
 
-        backendHandler.execute("test");*/
 
        Handler networkHandler = new Handler();
 
-       //Handle Network connection on different thread
-      /*  final Thread networkThread = new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    socket = new Socket("10.0.0.184", 5000);
-                    // Create PrintWriter object for sending messages to server.
-                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
-                    //Create BufferedReader object for receiving messages from server.
-                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                    out.println("Send this message\n");
-                    out.flush();
-
-                    while(!in.ready())
-                        try {
-                            sleep(50);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    String response = in.readLine();
-
-                    Log.d("MainMenuActivity", "networkThread: "+response);
-
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        };*/
 
         Button testButton = (Button) findViewById(R.id.testButton);
         testButton.setOnClickListener(new View.OnClickListener() {
@@ -118,15 +80,7 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 backendHandler.sendMessage("test");
-               /* if(networkThread.getState() == Thread.State.NEW){
-                    Log.d("MainMenuActivity", "Starting new thread");
-                    networkThread.start();
-                }else {
-                    Log.d("MainMenuActivity", "Thread already alive ");
-                }*/
 
-                //BackendHandler backendHandler = BackendHandlerReference.getBackendHandler();
-                //backendHandler.sendMessage("sent another message");
             }
         });
 
@@ -138,6 +92,11 @@ public class MainMenuActivity extends AppCompatActivity {
                 TextBased.class);
 
         startActivity(intent);
+        finish();
+    }
+
+    private void setSharedPreferencesDefaults(){
+        //Put code for saving defaults here
     }
 
 }

@@ -26,15 +26,31 @@ public class LobbyActivity extends AppCompatActivity {
 
         backendHandler = BackendHandlerReference.getBackendHandler();
 
+        //Handle Messages from the Server
         Handler handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String msgFromServer = (String) msg.getData().get("messageFromServer");
                 Toast.makeText(LobbyActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
+
+
+                int serverResponse;
+                try{
+                    serverResponse = Integer.parseInt(msgFromServer);
+                }catch (NumberFormatException e){
+                    //change this back to 0 for final. 1 is used for debug
+                    serverResponse = 0;
+                }
+                if(serverResponse == 1){
+                    toggleReadyButton();
+                }else {
+                    enableAllCharacterSelection();
+                    disableCharacterSelect(characterIndex);
+                    Toast.makeText(LobbyActivity.this, "Error: Character Already Taken", Toast.LENGTH_SHORT).show();
+                }
             }
         };
-
         backendHandler.setLobbyHandler(handler);
 
         playerReady = false;
@@ -50,20 +66,23 @@ public class LobbyActivity extends AppCompatActivity {
 
                 characterIndex = characterOption.indexOfChild(selectedCharacter);
 
-                toggleReadyButton();
+                //toggleReadyButton();
 
                 Toast.makeText(getApplicationContext(), selectedCharacter.getText(), Toast.LENGTH_SHORT).show();
                 /*selectedCharacter.setText("Selected Character");
                 disableCharacterSelect();
                 disbableAllCharacterSelection();*/
 
+                backendHandler.sendMessage("" +characterIndex);
+                disbableAllCharacterSelection();
+
             }
         });
 
     }
 
-    private void disableCharacterSelect(){
-        RadioButton selectedCharacter = (RadioButton) characterOption.getChildAt(characterIndex);
+    private void disableCharacterSelect(int indexToEnable){
+        RadioButton selectedCharacter = (RadioButton) characterOption.getChildAt(indexToEnable);
 
         selectedCharacter.setText("Ready!");
         selectedCharacter.setEnabled(false);
@@ -71,7 +90,7 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     private void enableCharacterSelect(int indexToEnable){
-        RadioButton selectedCharacter = (RadioButton) characterOption.getChildAt(characterIndex);
+        RadioButton selectedCharacter = (RadioButton) characterOption.getChildAt(indexToEnable);
         selectedCharacter.setEnabled(true);
 
         switch (indexToEnable){
@@ -97,6 +116,12 @@ public class LobbyActivity extends AppCompatActivity {
 
     }
 
+    private void enableAllCharacterSelection(){
+        for(int i = 0; i<6; i++){
+            enableCharacterSelect(i);
+        }
+    }
+
     private void disbableAllCharacterSelection(){
 
         for(int i = 0; i < characterOption.getChildCount(); i++) {
@@ -112,7 +137,7 @@ public class LobbyActivity extends AppCompatActivity {
 
             RadioButton selectedCharacter = (RadioButton) characterOption.getChildAt(characterIndex);
             selectedCharacter.setText("Selected Character");
-            disableCharacterSelect();
+            disableCharacterSelect(characterIndex);
             disbableAllCharacterSelection();
             enableStartButton();
         }
@@ -120,6 +145,7 @@ public class LobbyActivity extends AppCompatActivity {
             playerReady = false;
             characterSelectButton.setText(R.string.characterSelectReady);
             enableCharacterSelect(characterIndex);
+            disableStartButton();
 
         }
     }
@@ -131,6 +157,8 @@ public class LobbyActivity extends AppCompatActivity {
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                backendHandler.sendMessage("-1");
                 Intent intent = new Intent(LobbyActivity.this,
                         StartOfGame.class);
 
@@ -139,7 +167,7 @@ public class LobbyActivity extends AppCompatActivity {
         });
     }
 
-    private void hideStartButton(){
+    private void disableStartButton(){
         Button startGame = (Button) findViewById(R.id.startGame);
         startGame.setVisibility(View.INVISIBLE);
     }

@@ -29,6 +29,7 @@ public class GameBoard extends AppCompatActivity
     private String characterSelected = "Lady Peacock";
     private String characterPosition = "Study";
     HashMap<String, Integer> players = new HashMap<>();
+    HashMap<String, Integer> rooms = new HashMap<>();
     HashMap<String, String> halls = new HashMap<>();
 
     @Override
@@ -44,12 +45,10 @@ public class GameBoard extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        Toast.makeText(GameBoard.this, characterSelected, Toast.LENGTH_LONG).show();
-
-        //Get reference to included layout
-        //DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        View contentBoard = findViewById(R.id.contentBoard);
-        ImageView imageView = (ImageView) contentBoard.findViewById(R.id.baron_green);
+        // Instantiate the constraint layout
+        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.contentBoard);
+        ConstraintSet constraint = new ConstraintSet();
+        constraint.clone(constraintLayout);
 
         // Store all player information in a Hash Map
         players.put("Baron Green", R.id.baron_green);
@@ -59,19 +58,42 @@ public class GameBoard extends AppCompatActivity
         players.put("Dr. Plum", R.id.dr_plum);
         players.put("General Mustard", R.id.general_mustard);
 
+        // Store all room information
+        rooms.put("Study", R.id.study);
+        rooms.put("Great Hall", R.id.great_hall);
+        rooms.put("lounge", R.id.lounge);
+        rooms.put("Library", R.id.library);
+        rooms.put("Billiard Room", R.id.billiard_room);
+        rooms.put("Dining Room", R.id.dining_room);
+        rooms.put("Conservatory", R.id.conservatory);
+        rooms.put("Ballroom", R.id.ballrom);
+        rooms.put("Kitchen", R.id.kitchen);
+        rooms.put("Hall 1", R.id.hall1);
+        rooms.put("Hall 2", R.id.hall2);
+        rooms.put("Hall 3", R.id.hall3);
+        rooms.put("Hall 4", R.id.hall4);
+        rooms.put("Hall 5", R.id.hall5);
+        rooms.put("Hall 6", R.id.hall6);
+        rooms.put("Hall 7", R.id.hall7);
+        rooms.put("Hall 8", R.id.hall8);
+        rooms.put("Hall 9", R.id.hall9);
+        rooms.put("Hall 10", R.id.hall10);
+        rooms.put("Hall 11", R.id.hall11);
+        rooms.put("Hall 12", R.id.hall12);
+
         // Store if a player is occupying a hallway
-        halls.put("hall1", "None");
-        halls.put("hall2", "None");
-        halls.put("hall3", "None");
-        halls.put("hall4", "None");
-        halls.put("hall5", "None");
-        halls.put("hall6", "None");
-        halls.put("hall7", "None");
-        halls.put("hall8", "None");
-        halls.put("hall9", "None");
-        halls.put("hall10", "None");
-        halls.put("hall11", "None");
-        halls.put("hall12", "None");
+        halls.put("Hall 1", "None");
+        halls.put("Hall 2", "None");
+        halls.put("Hall 3", "None");
+        halls.put("Hall 4", "None");
+        halls.put("Hall 5", "None");
+        halls.put("Hall 6", "None");
+        halls.put("Hall 7", "None");
+        halls.put("Hall 8", "None");
+        halls.put("Hall 9", "None");
+        halls.put("Hall 10", "None");
+        halls.put("Hall 11", "None");
+        halls.put("Hall 12", "None");
     }
 
     @Override
@@ -181,93 +203,93 @@ public class GameBoard extends AppCompatActivity
             case "Study":
                 lounge.setEnabled(true);
                 conservatory.setEnabled(true);
-                if (halls.get("hall1").equals("None")) {
+                if (halls.get("Hall 1").equals("None")) {
                     hall1.setEnabled(true);
                 }
-                if (halls.get("hall3").endsWith("None")) {
+                if (halls.get("Hall 3").endsWith("None")) {
                     hall3.setEnabled(true);
                 }
                 break;
             case "Great Hall":
                 ballroom.setEnabled(true);
-                if (halls.get("hall1").equals("None")) {
+                if (halls.get("Hall 1").equals("None")) {
                     hall1.setEnabled(true);
                 }
-                if (halls.get("hall2").equals("None")) {
+                if (halls.get("Hall 2").equals("None")) {
                     hall2.setEnabled(true);
                 }
                 break;
             case "Lounge":
                 study.setEnabled(true);
                 kitchen.setEnabled(true);
-                if (halls.get("hall2").equals("None")) {
+                if (halls.get("Hall 2").equals("None")) {
                     hall2.setEnabled(true);
                 }
-                if (halls.get("hall5").equals("None")) {
+                if (halls.get("Hall 5").equals("None")) {
                     hall5.setEnabled(true);
                 }
                 break;
             case "Library":
                 dining_room.setEnabled(true);
-                if (halls.get("hall3").equals("None")) {
+                if (halls.get("Hall 3").equals("None")) {
                     hall3.setEnabled(true);
                 }
-                if (halls.get("hall8").equals("None")) {
+                if (halls.get("Hall 8").equals("None")) {
                     hall8.setEnabled(true);
                 }
                 break;
             case "Billiard Room":
-                if (halls.get("hall4").equals("None")) {
+                if (halls.get("Hall 4").equals("None")) {
                     hall4.setEnabled(true);
                 }
-                if (halls.get("hall6").equals("None")) {
+                if (halls.get("Hall 6").equals("None")) {
                     hall6.setEnabled(true);
                 }
-                if (halls.get("hall7").equals("None")) {
+                if (halls.get("Hall 7").equals("None")) {
                     hall7.setEnabled(true);
                 }
-                if (halls.get("hall9").equals("None")) {
+                if (halls.get("Hall 9").equals("None")) {
                     hall9.setEnabled(true);
                 }
                 break;
             case "Dining Room":
                 library.setEnabled(true);
-                if (halls.get("hall5").equals("None")) {
+                if (halls.get("Hall 5").equals("None")) {
                     hall5.setEnabled(true);
                 }
-                if (halls.get("hall7").equals("None")) {
+                if (halls.get("Hall 7").equals("None")) {
                     hall7.setEnabled(true);
                 }
-                if (halls.get("hall10").equals("None")) {
+                if (halls.get("Hall 10").equals("None")) {
                     hall10.setEnabled(true);
                 }
                 break;
             case "Conservatory":
                 study.setEnabled(true);
                 kitchen.setEnabled(true);
-                if (halls.get("hall8").equals("None")) {
+                if (halls.get("Hall 8").equals("None")) {
                     hall8.setEnabled(true);
                 }
-                if (halls.get("hall11").equals("None")) {
+                if (halls.get("Hall 11").equals("None")) {
                     hall11.setEnabled(true);
                 }
                 break;
             case "Ballroon":
                 great_hall.setEnabled(true);
-                if (halls.get("hall11").equals("None")) {
+                if (halls.get("Hall 11").equals("None")) {
                     hall11.setEnabled(true);
                 }
-                if (halls.get("hall12").equals("None")) {
+                if (halls.get("Hall 12").equals("None")) {
                     hall12.setEnabled(true);
                 }
                 break;
             case "Kitchen":
                 lounge.setEnabled(true);
                 conservatory.setEnabled(true);
-                if (halls.get("hall10").equals("None")) {
+                if (halls.get("Hall 10").equals("None")) {
                     hall10.setEnabled(true);
                 }
-                if (halls.get("hall12").equals("None")) {
+                if (halls.get("Hall 12").equals("None")) {
                     hall12.setEnabled(true);
                 }
                 break;
@@ -453,8 +475,18 @@ public class GameBoard extends AppCompatActivity
     // Room click action
     public void onRoomClick(View view){
 
+        String room = "";
+
         // Get ID of the button being clicked
-        int room = view.getId();
+        for (HashMap.Entry<String, Integer> rooms : rooms.entrySet()) {
+            if (rooms.getValue()==view.getId()){
+                room = rooms.getKey();
+                break;
+            }
+            else{
+                continue;
+            }
+        }
 
         // Disables the room buttons
         disable(characterPosition);
@@ -465,11 +497,13 @@ public class GameBoard extends AppCompatActivity
         // Enable finish button
         enableFinishButton(characterSelected, room);
 
-        // TODO update characterPosition variable
+        // Update characterPosition variable
+        characterPosition = room;
+
     }
 
     // Move the player
-    public void move(String player, int room){
+    public void move(String player, String room){
 
         // Instantiate the constraint layout
         ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.contentBoard);
@@ -480,49 +514,63 @@ public class GameBoard extends AppCompatActivity
         switch (player){
             // Baron Green
             case "Baron Green":
-                constraint.connect(players.get(player),ConstraintSet.LEFT, room,ConstraintSet.LEFT);
-                constraint.connect(players.get(player), ConstraintSet.TOP, room, ConstraintSet.TOP);
+                constraint.connect(players.get(player),ConstraintSet.LEFT, rooms.get(room),ConstraintSet.LEFT);
+                constraint.connect(players.get(player), ConstraintSet.TOP, rooms.get(room), ConstraintSet.TOP);
                 constraint.applyTo(constraintLayout);
                 break;
             // Lady Peacock
             case "Lady Peacock":
-                constraint.connect(players.get(player),ConstraintSet.RIGHT, room,ConstraintSet.RIGHT);
-                constraint.connect(players.get(player), ConstraintSet.TOP, room, ConstraintSet.TOP);
+                constraint.connect(players.get(player),ConstraintSet.RIGHT, rooms.get(room),ConstraintSet.RIGHT);
+                constraint.connect(players.get(player), ConstraintSet.TOP, rooms.get(room), ConstraintSet.TOP);
                 constraint.applyTo(constraintLayout);
                 break;
             // Madam White
             case "Madam White":
-                constraint.connect(players.get(player),ConstraintSet.LEFT, room,ConstraintSet.LEFT);
-                constraint.connect(players.get(player), ConstraintSet.BOTTOM, room, ConstraintSet.BOTTOM);
+                constraint.connect(players.get(player),ConstraintSet.LEFT, rooms.get(room),ConstraintSet.LEFT);
+                constraint.connect(players.get(player), ConstraintSet.BOTTOM, rooms.get(room), ConstraintSet.BOTTOM);
                 constraint.applyTo(constraintLayout);
                 break;
             // Lady Scarlet
             case "Lady Scarlet":
-                constraint.connect(players.get(player),ConstraintSet.RIGHT, room,ConstraintSet.RIGHT);
-                constraint.connect(players.get(player), ConstraintSet.BOTTOM, room, ConstraintSet.BOTTOM);
+                constraint.connect(players.get(player),ConstraintSet.RIGHT, rooms.get(room),ConstraintSet.RIGHT);
+                constraint.connect(players.get(player), ConstraintSet.BOTTOM, rooms.get(room), ConstraintSet.BOTTOM);
                 constraint.applyTo(constraintLayout);
                 break;
             // Dr Plum
             case "Dr. Plum":
-                constraint.connect(players.get(player), ConstraintSet.RIGHT, room,ConstraintSet.RIGHT);
-                constraint.connect(players.get(player),ConstraintSet.TOP, room,ConstraintSet.TOP);
-                constraint.connect(players.get(player), ConstraintSet.BOTTOM, room, ConstraintSet.BOTTOM);
+                constraint.connect(players.get(player),ConstraintSet.RIGHT, rooms.get(room),ConstraintSet.RIGHT);
+                constraint.connect(players.get(player),ConstraintSet.TOP, rooms.get(room),ConstraintSet.TOP);
+                constraint.connect(players.get(player), ConstraintSet.BOTTOM, rooms.get(room), ConstraintSet.BOTTOM);
                 constraint.applyTo(constraintLayout);
                 break;
             // General Mustard
             case "General Mustard":
-                constraint.connect(players.get(player),ConstraintSet.LEFT, room,ConstraintSet.LEFT);
-                constraint.connect(players.get(player),ConstraintSet.TOP, room,ConstraintSet.TOP);
-                constraint.connect(players.get(player), ConstraintSet.BOTTOM, room, ConstraintSet.BOTTOM);
+                constraint.connect(players.get(player),ConstraintSet.LEFT, rooms.get(room),ConstraintSet.LEFT);
+                constraint.connect(players.get(player),ConstraintSet.TOP, rooms.get(room),ConstraintSet.TOP);
+                constraint.connect(players.get(player), ConstraintSet.BOTTOM, rooms.get(room), ConstraintSet.BOTTOM);
                 constraint.applyTo(constraintLayout);
                 break;
         }
 
-        //TODO Check if the player was in a hallway
+        // Check if the player was in a hallway
+        for (HashMap.Entry<String, String> halls : halls.entrySet()) {
+            if (halls.getValue().equals(player)){
+                halls.setValue("None");
+                break;
+            }
+        }
+
+        // Update the hash map if the player moved to a hallway
+        for (HashMap.Entry<String, String> halls : halls.entrySet()) {
+            if (halls.getKey().equals(room)){
+                halls.setValue(player);
+                break;
+            }
+        }
     }
 
     // End the players current turn
-    private void enableFinishButton(String player, int room){
+    private void enableFinishButton(String player, String room){
         Button finish = (Button) findViewById(R.id.finish_button);
         finish.setVisibility(View.VISIBLE);
 

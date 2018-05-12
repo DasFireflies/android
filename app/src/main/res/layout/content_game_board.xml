@@ -35,7 +35,8 @@
         app:layout_constraintHorizontal_bias="0.294"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/library"
-        app:layout_constraintVertical_bias="0.41" />
+        app:layout_constraintVertical_bias="0.41"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/great_hall"
@@ -48,7 +49,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.663" />
+        app:layout_constraintVertical_bias="0.663"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/ballrom"
@@ -61,7 +63,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/billiard_room"
-        app:layout_constraintVertical_bias="0.413" />
+        app:layout_constraintVertical_bias="0.413"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/dining_room"
@@ -74,7 +77,8 @@
         app:layout_constraintHorizontal_bias="0.732"
         app:layout_constraintStart_toEndOf="@+id/billiard_room"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.534" />
+        app:layout_constraintVertical_bias="0.534"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/library"
@@ -87,7 +91,8 @@
         app:layout_constraintHorizontal_bias="0.297"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintVertical_bias="0.536"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/billiard_room"
@@ -100,7 +105,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.534" />
+        app:layout_constraintVertical_bias="0.534"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/lounge"
@@ -113,7 +119,8 @@
         app:layout_constraintHorizontal_bias="0.732"
         app:layout_constraintStart_toEndOf="@+id/great_hall"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.663" />
+        app:layout_constraintVertical_bias="0.663"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/study"
@@ -126,7 +133,8 @@
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66" />
+        app:layout_constraintVertical_bias="0.66"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/hall1"
@@ -142,7 +150,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/study"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642"/>
+        app:layout_constraintVertical_bias="0.642"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall2"
@@ -158,7 +167,8 @@
         app:layout_constraintEnd_toStartOf="@+id/lounge"
         app:layout_constraintStart_toEndOf="@+id/great_hall"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.645" />
+        app:layout_constraintVertical_bias="0.645"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall3"
@@ -172,7 +182,8 @@
         app:layout_constraintEnd_toStartOf="@+id/billiard_room"
         app:layout_constraintStart_toEndOf="@+id/library"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.53"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall4"
@@ -186,7 +197,8 @@
         app:layout_constraintEnd_toStartOf="@+id/dining_room"
         app:layout_constraintStart_toEndOf="@+id/billiard_room"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.528" />
+        app:layout_constraintVertical_bias="0.528"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall5"
@@ -203,7 +215,8 @@
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toEndOf="@+id/conservatory"
         app:layout_constraintTop_toBottomOf="@+id/hall3"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.482"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall6"
@@ -219,7 +232,8 @@
         app:layout_constraintEnd_toStartOf="@+id/kitchen"
         app:layout_constraintStart_toEndOf="@+id/ballrom"
         app:layout_constraintTop_toBottomOf="@+id/hall4"
-        app:layout_constraintVertical_bias="0.484" />
+        app:layout_constraintVertical_bias="0.484"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall7"
@@ -235,7 +249,8 @@
         app:layout_constraintHorizontal_bias="0.282"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/study"
-        app:layout_constraintVertical_bias="0.888" />
+        app:layout_constraintVertical_bias="0.888"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall8"
@@ -248,7 +263,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/great_hall"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall9"
@@ -264,7 +280,8 @@
         app:layout_constraintHorizontal_bias="0.731"
         app:layout_constraintStart_toEndOf="@+id/hall8"
         app:layout_constraintTop_toBottomOf="@+id/lounge"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintVertical_bias="0.8"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall10"
@@ -280,7 +297,8 @@
         app:layout_constraintHorizontal_bias="0.282"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/library"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall11"
@@ -294,7 +312,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/billiard_room"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/hall12"
@@ -310,7 +329,8 @@
         app:layout_constraintHorizontal_bias="0.731"
         app:layout_constraintStart_toEndOf="@+id/hall11"
         app:layout_constraintTop_toBottomOf="@+id/dining_room"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:enabled="false" />
 
     <TextView
         android:id="@+id/textView1"

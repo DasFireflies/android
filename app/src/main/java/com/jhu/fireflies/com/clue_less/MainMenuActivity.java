@@ -52,6 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         BackendHandlerReference.setBackendHandler(backendHandler);
 
+        //Handle Messages from the Backend
         Handler handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -60,7 +61,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 Toast.makeText(MainMenuActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
             }
         };
-
         backendHandler.setMainMenuHandler(handler);
 
        /* Handler handler = new Handler(){

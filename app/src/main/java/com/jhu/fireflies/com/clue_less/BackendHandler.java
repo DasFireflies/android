@@ -36,6 +36,12 @@ public class BackendHandler {
     private Handler gameboardHandler;
     private Handler MainMenuHandler;
     private Handler lobbyHandler;
+    private Handler initialCluesHandler;
+    private Handler startOfGameHandler;
+    private Handler suggestionAccusationHandler;
+    private Handler textBasedHandler;
+    private Handler activityLogHandler;
+    private String messageToServer;
 
 
     public BackendHandler(){
@@ -49,9 +55,15 @@ public class BackendHandler {
     public void setGameboardHandler(Handler in){gameboardHandler = in;}
     public void setMainMenuHandler(Handler in){MainMenuHandler = in;}
     public void setLobbyHandler(Handler in){lobbyHandler = in;}
+    public void setInitialCluesHandler(Handler in){initialCluesHandler = in;}
+    public void setStartOfGameHandler(Handler in){startOfGameHandler = in;}
+    public void setSuggestionAccusationHandler(Handler in){suggestionAccusationHandler = in;}
+    public void setTextBasedHandler(Handler in){textBasedHandler = in;}
+    public void setActivityLogHandler(Handler in){activityLogHandler = in;}
 
     public void sendMessage(String s){
 
+        messageToServer = s;
         Thread writerThread = new Thread(new WriteRunnable(socket));
         writerThread.start();
     }
@@ -67,8 +79,8 @@ public class BackendHandler {
         @Override
         public void run() {
             try{
-                socket = new Socket("10.0.0.184", 5000);
-                //socket = new Socket("18.188.114.251", 5000);
+                //socket = new Socket("10.0.0.184", 5000);
+                socket = new Socket("18.188.114.251", 5000);
                 BackendHandlerReference.setSocket(socket);
 
             }catch (IOException e){
@@ -77,9 +89,9 @@ public class BackendHandler {
 
             if (socket != null && socket.isConnected()) {
                 try {
-                    PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                    out.println();
-                    out.flush();
+                    //PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                    //out.println();
+                    //out.flush();
 
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -100,29 +112,70 @@ public class BackendHandler {
                         }
 
                         //send message to all handlers
-                        Message msg = new Message();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("messageFromServer", response);
-                        msg.setData(bundle);
-
+                        //...
+                        //Game Board Handler
+                        Bundle bundleGame = new Bundle();
+                        bundleGame.putString("messageFromServer", response);
+                        Message msgGame = new Message();
+                        msgGame.setData(bundleGame);
                         if(gameboardHandler != null){
-                            gameboardHandler.sendMessage(msg);
+                            gameboardHandler.sendMessage(msgGame);
                         }
-
-                        Message msgMain = new Message();
+                        //Main Menu Handler
                         Bundle bundleMain = new Bundle();
                         bundleMain.putString("messageFromServer", response);
+                        Message msgMain = new Message();
                         msgMain.setData(bundleMain);
                         if(MainMenuHandler != null){
                             MainMenuHandler.sendMessage(msgMain);
                         }
-
-                        Message msgLobby = new Message();
+                        //Lobby Handler
                         Bundle bundleLobby = new Bundle();
                         bundleLobby.putString("messageFromServer", response);
-                        msg.setData(bundleLobby);
+                        Message msgLobby = new Message();
+                        msgLobby.setData(bundleLobby);
                         if(lobbyHandler != null){
                             lobbyHandler.sendMessage(msgLobby);
+                        }
+                        //Initial Clues Handler
+                        Bundle bundleInitialClues = new Bundle();
+                        bundleInitialClues.putString("messageFromServer", response);
+                        Message msgInitialClues = new Message();
+                        msgInitialClues.setData(bundleInitialClues);
+                        if(initialCluesHandler != null){
+                            initialCluesHandler.sendMessage(msgInitialClues);
+                        }
+                        //Start of Game Handler
+                        Bundle bundleStartOfGame = new Bundle();
+                        bundleStartOfGame.putString("messageFromServer", response);
+                        Message msgStartOfGame = new Message();
+                        msgStartOfGame.setData(bundleStartOfGame);
+                        if(MainMenuHandler != null){
+                            MainMenuHandler.sendMessage(msgStartOfGame);
+                        }
+                        //Suggestion Accusation Handler
+                        Bundle bundleSuggestionAccustation = new Bundle();
+                        bundleSuggestionAccustation.putString("messageFromServer", response);
+                        Message msgSuggestionAccusation = new Message();
+                        msgSuggestionAccusation.setData(bundleSuggestionAccustation);
+                        if(lobbyHandler != null){
+                            lobbyHandler.sendMessage(msgSuggestionAccusation);
+                        }
+                        //Text Based Handler
+                        Bundle bundleTextBased = new Bundle();
+                        bundleTextBased.putString("messageFromServer", response);
+                        Message msgTextBased = new Message();
+                        msgTextBased.setData(bundleTextBased);
+                        if(MainMenuHandler != null){
+                            MainMenuHandler.sendMessage(msgTextBased);
+                        }
+                        //Activity Log Handler
+                        Bundle bundleActivityLog = new Bundle();
+                        bundleActivityLog.putString("messageFromServer", response);
+                        Message msgActivityLog = new Message();
+                        msgActivityLog.setData(bundleActivityLog);
+                        if(lobbyHandler != null){
+                            lobbyHandler.sendMessage(msgActivityLog);
                         }
 
 
@@ -158,7 +211,7 @@ public class BackendHandler {
                     //Do writer code
                     PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
-                    out.println();
+                    out.println(messageToServer);
                     out.flush();
                     Log.d("BackendHandler", "writerThread: this worked");
 

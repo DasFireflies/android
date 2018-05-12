@@ -11,6 +11,7 @@ import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.telecom.Call;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -37,8 +38,8 @@ public class GameBoard extends AppCompatActivity
     // TODO store character information
     private BackendHandler backendHandler;
     private  SharedPreferences sharedPreferences;
-    private String characterSelected = "Lady Peacock";
-    private String characterPosition = "Study";
+    private String characterSelected = "";
+    private String characterPosition = "";
     HashMap<String, Integer> players = new HashMap<>();
     HashMap<String, Integer> rooms = new HashMap<>();
     HashMap<String, String> halls = new HashMap<>();
@@ -67,7 +68,7 @@ public class GameBoard extends AppCompatActivity
 
                 if (messageList.get(0).compareTo("3") == 0) {
                     String message = messageList.get(1)+" suggested that "+messageList.get(2)+" did it in the "+messageList.get(3)+" with the "+messageList.get(4)+". ";
-                    if (messageList.get(5).compareTo("") == 0) {
+                    if (messageList.size()<6) {
                         message = message + "No one was able to disprove the suggestion";
                     }
                     else {
@@ -101,13 +102,13 @@ public class GameBoard extends AppCompatActivity
                 if(messageList.get(0).compareTo("5") == 0) {
                     //this means it is your turn and the server is waiting for a move
                     //call function to activate buttons
-                    startTurn();
 
                     String you_were_just_moved_by_a_suggestion = messageList.get(1);
                     //this is "0" or "1" for False/True. If this value is "1" then
                     //you can begin your move by making a suggestion. Otherwise you
                     //must begin your move by moving or making an accusation
-                    String your_location = messageList.get(2);
+                    characterPosition = messageList.get(2);
+                    startTurn();
 
                     //im not sure what to do with the above pieces 2 of info ^^^
                 }
@@ -132,6 +133,8 @@ public class GameBoard extends AppCompatActivity
             case 5: characterSelected = "General Mustard"; break;
         }
 
+        //Read from Shared Preferences
+        characterPosition = sharedPreferences.getString("characterRoom", "Conservatory");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -156,12 +159,12 @@ public class GameBoard extends AppCompatActivity
         // Store all room information
         rooms.put("Study", R.id.study);
         rooms.put("Great Hall", R.id.great_hall);
-        rooms.put("lounge", R.id.lounge);
+        rooms.put("Lounge", R.id.lounge);
         rooms.put("Library", R.id.library);
         rooms.put("Billiard Room", R.id.billiard_room);
         rooms.put("Dining Room", R.id.dining_room);
         rooms.put("Conservatory", R.id.conservatory);
-        rooms.put("Ballroom", R.id.ballrom);
+        rooms.put("Ballroom", R.id.ballroom);
         rooms.put("Kitchen", R.id.kitchen);
         rooms.put("Hall 1", R.id.hall1);
         rooms.put("Hall 2", R.id.hall2);
@@ -189,16 +192,14 @@ public class GameBoard extends AppCompatActivity
         halls.put("Hall 10", "None");
         halls.put("Hall 11", "None");
         halls.put("Hall 12", "None");
-    }
 
-    // Pulls the last state of the positions Hash Map
-    @Override
-    protected void onResume() {
-        super.onResume();
+        this.onResume();
+
         positions = loadMap();
 
         // Move the players into their last position
-        for (HashMap.Entry<String, String> positions : halls.entrySet()) {
+        for (HashMap.Entry<String, String> positions : positions.entrySet()) {
+            Log.d("GameBoard", "key: "+ positions.getKey() + "\nvalue: "+ positions.getValue());
             move(positions.getKey(), positions.getValue());
         }
     }
@@ -301,7 +302,7 @@ public class GameBoard extends AppCompatActivity
         Button billiard_room = (Button) findViewById(R.id.billiard_room);
         Button dining_room = (Button) findViewById(R.id.dining_room);
         Button conservatory = (Button) findViewById(R.id.conservatory);
-        Button ballroom = (Button) findViewById(R.id.ballrom);
+        Button ballroom = (Button) findViewById(R.id.ballroom);
         Button kitchen = (Button) findViewById(R.id.kitchen);
         Button hall1 = (Button) findViewById(R.id.hall1);
         Button hall2 = (Button) findViewById(R.id.hall2);
@@ -315,14 +316,14 @@ public class GameBoard extends AppCompatActivity
         Button hall10 = (Button) findViewById(R.id.hall10);
         Button hall11 = (Button) findViewById(R.id.hall11);
         Button hall12 = (Button) findViewById(R.id.hall12);
-        Button suggestion = (Button) findViewById(R.id.nav_suggestion);
-        Button accusation = (Button) findViewById(R.id.nav_acuse);
+        //View slideOutContainer = findViewById(R.id.nav_view);
+        //Button suggestion = (Button) slideOutContainer.findViewById(R.id.nav_suggestion);
+        //Button accusation = (Button) slideOutContainer.findViewById(R.id.nav_acuse);
 
 
         switch (characterPosition){
             case "Study":
-                lounge.setEnabled(true);
-                conservatory.setEnabled(true);
+                kitchen.setEnabled(true);
                 if (halls.get("Hall 1").equals("None")) {
                     hall1.setEnabled(true);
                 }
@@ -331,17 +332,18 @@ public class GameBoard extends AppCompatActivity
                 }
                 break;
             case "Great Hall":
-                ballroom.setEnabled(true);
                 if (halls.get("Hall 1").equals("None")) {
                     hall1.setEnabled(true);
                 }
                 if (halls.get("Hall 2").equals("None")) {
                     hall2.setEnabled(true);
                 }
+                if (halls.get("Hall 4").equals("None")){
+                    hall4.setEnabled(true);
+                }
                 break;
             case "Lounge":
-                study.setEnabled(true);
-                kitchen.setEnabled(true);
+                conservatory.setEnabled(true);
                 if (halls.get("Hall 2").equals("None")) {
                     hall2.setEnabled(true);
                 }
@@ -350,9 +352,11 @@ public class GameBoard extends AppCompatActivity
                 }
                 break;
             case "Library":
-                dining_room.setEnabled(true);
                 if (halls.get("Hall 3").equals("None")) {
                     hall3.setEnabled(true);
+                }
+                if (halls.get("Hall 6").equals("None")) {
+                    hall6.setEnabled(true);
                 }
                 if (halls.get("Hall 8").equals("None")) {
                     hall8.setEnabled(true);
@@ -373,7 +377,6 @@ public class GameBoard extends AppCompatActivity
                 }
                 break;
             case "Dining Room":
-                library.setEnabled(true);
                 if (halls.get("Hall 5").equals("None")) {
                     hall5.setEnabled(true);
                 }
@@ -385,8 +388,7 @@ public class GameBoard extends AppCompatActivity
                 }
                 break;
             case "Conservatory":
-                study.setEnabled(true);
-                kitchen.setEnabled(true);
+                lounge.setEnabled(true);
                 if (halls.get("Hall 8").equals("None")) {
                     hall8.setEnabled(true);
                 }
@@ -394,8 +396,10 @@ public class GameBoard extends AppCompatActivity
                     hall11.setEnabled(true);
                 }
                 break;
-            case "Ballroon":
-                great_hall.setEnabled(true);
+            case "Ballroom":
+                if (halls.get("Hall 9").equals("None")) {
+                    hall9.setEnabled(true);
+                }
                 if (halls.get("Hall 11").equals("None")) {
                     hall11.setEnabled(true);
                 }
@@ -404,8 +408,7 @@ public class GameBoard extends AppCompatActivity
                 }
                 break;
             case "Kitchen":
-                lounge.setEnabled(true);
-                conservatory.setEnabled(true);
+                study.setEnabled(true);
                 if (halls.get("Hall 10").equals("None")) {
                     hall10.setEnabled(true);
                 }
@@ -463,8 +466,8 @@ public class GameBoard extends AppCompatActivity
                 break;
         }
 
-        accusation.setEnabled(true);
-        suggestion.setEnabled(true);
+        //accusation.setEnabled(true);
+        //suggestion.setEnabled(true);
     }
 
     // Disable the buttons when the turn is finished
@@ -477,7 +480,7 @@ public class GameBoard extends AppCompatActivity
         Button billiard_room = (Button) findViewById(R.id.billiard_room);
         Button dining_room = (Button) findViewById(R.id.dining_room);
         Button conservatory = (Button) findViewById(R.id.conservatory);
-        Button ballroom = (Button) findViewById(R.id.ballrom);
+        Button ballroom = (Button) findViewById(R.id.ballroom);
         Button kitchen = (Button) findViewById(R.id.kitchen);
         Button hall1 = (Button) findViewById(R.id.hall1);
         Button hall2 = (Button) findViewById(R.id.hall2);
@@ -491,29 +494,26 @@ public class GameBoard extends AppCompatActivity
         Button hall10 = (Button) findViewById(R.id.hall10);
         Button hall11 = (Button) findViewById(R.id.hall11);
         Button hall12 = (Button) findViewById(R.id.hall12);
-        Button suggestion = (Button) findViewById(R.id.nav_suggestion);
-        Button accusation = (Button) findViewById(R.id.nav_acuse);
+        //View slideOutContainer = findViewById(R.id.nav_view);
+        //Button suggestion = (Button) slideOutContainer.findViewById(R.id.nav_suggestion);
+        //Button accusation = (Button) slideOutContainer.findViewById(R.id.nav_acuse);
 
         switch (characterPosition){
             case "Study":
-                lounge.setEnabled(false);
-                conservatory.setEnabled(false);
+                kitchen.setEnabled(false);
                 hall1.setEnabled(false);
                 hall3.setEnabled(false);
                 break;
             case "Great Hall":
-                ballroom.setEnabled(false);
                 hall1.setEnabled(false);
                 hall2.setEnabled(false);
                 break;
             case "Lounge":
-                study.setEnabled(false);
-                kitchen.setEnabled(false);
+                conservatory.setEnabled(false);
                 hall2.setEnabled(false);
                 hall5.setEnabled(false);
                 break;
             case "Library":
-                dining_room.setEnabled(false);
                 hall3.setEnabled(false);
                 hall8.setEnabled(false);
                 break;
@@ -524,25 +524,22 @@ public class GameBoard extends AppCompatActivity
                 hall9.setEnabled(false);
                 break;
             case "Dining Room":
-                library.setEnabled(false);
                 hall5.setEnabled(false);
                 hall7.setEnabled(false);
                 hall10.setEnabled(false);
                 break;
             case "Conservatory":
-                study.setEnabled(false);
-                kitchen.setEnabled(false);
+                lounge.setEnabled(false);
                 hall8.setEnabled(false);
                 hall11.setEnabled(false);
                 break;
-            case "Ballroon":
-                great_hall.setEnabled(false);
+            case "Ballroom":
+                hall9.setEnabled(false);
                 hall11.setEnabled(false);
                 hall12.setEnabled(false);
                 break;
             case "Kitchen":
-                lounge.setEnabled(false);
-                conservatory.setEnabled(false);
+                study.setEnabled(false);
                 hall10.setEnabled(false);
                 hall12.setEnabled(false);
                 break;
@@ -596,14 +593,15 @@ public class GameBoard extends AppCompatActivity
                 break;
         }
 
-        accusation.setEnabled(false);
-        suggestion.setEnabled(false);
+        //accusation.setEnabled(false);
+        //suggestion.setEnabled(false);
     }
 
     // Room click action
     public void onRoomClick(View view){
 
         String room = "";
+        String message ="";
 
         // Get ID of the button being clicked
         for (HashMap.Entry<String, Integer> rooms : rooms.entrySet()) {
@@ -626,6 +624,13 @@ public class GameBoard extends AppCompatActivity
 
         // Move the player to the selected room
         move(characterSelected, room);
+
+        // Send the message to the server
+        message = "2" + "," + room;
+        //send to server
+        backendHandler.sendMessage(message);
+        //log messages
+        //BackendHandlerReference.addToServerLog("", message);
 
         // Enable finish button
         enableFinishButton(characterSelected, room);
@@ -700,6 +705,10 @@ public class GameBoard extends AppCompatActivity
                 break;
             }
         }
+        positions.put(player,room);
+        characterPosition = room;
+        Log.d("GameBoard", "key: "+ player + "\nvalue: "+ room);
+        Log.d("GameBoard", "CharacterPosition: " +characterPosition);
     }
 
     // End the players current turn
@@ -739,6 +748,7 @@ public class GameBoard extends AppCompatActivity
         try{
             if (pSharedPref != null){
                 String jsonString = pSharedPref.getString("Positions", (new JSONObject()).toString());
+                Log.d("GameBoard", jsonString);
                 JSONObject jsonObject = new JSONObject(jsonString);
                 Iterator<String> keysItr = jsonObject.keys();
                 while(keysItr.hasNext()) {

@@ -20,7 +20,7 @@
             android:id="@+id/nav_suggestion"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Make Suggestion"
-            android:enabled="false"/>
+            android:enabled="true"/>
         <item
             android:id="@+id/nav_investigationPad"
             android:icon="@drawable/ic_menu_manage"
@@ -33,7 +33,7 @@
                 android:id="@+id/nav_acuse"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Make Accusation"
-                android:enabled="false"/>
+                android:enabled="true"/>
         </menu>
     </item>
 

@@ -39,6 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu_layout);
+        setSharedPreferencesDefaults();
 
         Button joinGame = (Button) findViewById(R.id.joinGame);
 
@@ -59,7 +60,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         Button newGame = (Button) findViewById(R.id.newGame);
 
-        joinGame.setOnClickListener(new View.OnClickListener() {
+        newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /*Put code to reset all shared preferences to defaults
@@ -121,12 +122,12 @@ public class MainMenuActivity extends AppCompatActivity {
     private void setSharedPreferencesDefaults(){
         //Put code for saving defaults here
         HashMap<String, String> positions = new HashMap<>();
-        positions.put("Baron Green", "Study");
-        positions.put("Lady Peacock", "Lounge");
-        positions.put("Madam White", "Library");
-        positions.put("Lady Scarlet", "Dining Room");
-        positions.put("Dr. Plum", "Conservatory");
-        positions.put("General Mustard", "Kitchen");
+        positions.put("Baron Green", "Hall 11");
+        positions.put("Lady Peacock", "Hall 8");
+        positions.put("Madam White", "Hall 12");
+        positions.put("Lady Scarlet", "Hall 2");
+        positions.put("Dr. Plum", "Hall 3");
+        positions.put("General Mustard", "Hall 5");
         saveMap(positions);
 
     }
@@ -136,6 +137,7 @@ public class MainMenuActivity extends AppCompatActivity {
         if (pSharedPref != null){
             JSONObject jsonObject = new JSONObject(inputMap);
             String jsonString = jsonObject.toString();
+            Log.d("MainMenu", jsonString);
             SharedPreferences.Editor editor = pSharedPref.edit();
             editor.remove("Positions").commit();
             editor.putString("Positions", jsonString);

@@ -50,7 +50,7 @@ public class LobbyActivity extends AppCompatActivity {
                 Toast.makeText(LobbyActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
 
                 //if someone else hits start button
-                if(msgFromServer == "gamestarted"){
+                if(msgFromServer.compareTo("gamestarted") == 0){
                     Intent intent = new Intent(LobbyActivity.this,
                             StartOfGame.class);
 

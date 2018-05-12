@@ -42,4 +42,15 @@
         <item>Candlestick</item>
         <item>Revolver</item>
     </string-array>
+    <string-array name="rooms">
+        <item>Study</item>
+        <item>Great Hall</item>
+        <item>Lounge</item>
+        <item>Library</item>
+        <item>Billiard Room</item>
+        <item>Dining Room</item>
+        <item>Conservatory</item>
+        <item>Ballroom</item>
+        <item>Kitchen</item>
+    </string-array>
 </resources>

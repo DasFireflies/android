@@ -49,18 +49,34 @@ public class SuggestionAccusationActivity extends AppCompatActivity {
         weaponAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         weaponSpinner.setAdapter(weaponAdapter);
 
+        //set the list of room in dropdown
+        final Spinner roomSpinner = (Spinner) findViewById(R.id.roomSpinner);
+        ArrayAdapter<CharSequence> roomAdapter = ArrayAdapter.createFromResource(this,R.array.rooms, android.R.layout.simple_spinner_item);
+        roomAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        roomSpinner.setAdapter(roomAdapter);
+
+
         Button confirmButtom = (Button) findViewById(R.id.confirmSuggestion);
         confirmButtom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Spinner roomSpinner = (Spinner) findViewById(R.id.roomSpinner);
+
                 suspectValue = suspectSpinner.getSelectedItem().toString();
                 weaponValue = weaponSpinner.getSelectedItem().toString();
-                String test = "Suspect: " + suspectValue + "\nWeapon: " + weaponValue + "\nRoom: " + characterRoom;
+                String roomGuess = characterRoom;
+
+                if(suggestAccuseConfig == 4){
+                    roomGuess = roomSpinner.getSelectedItem().toString();
+                }
+
+
+                String test = "Suspect: " + suspectValue + "\nWeapon: " + weaponValue + "\nRoom: " + roomGuess;
                 Toast.makeText(SuggestionAccusationActivity.this, test, Toast.LENGTH_SHORT).show();
 
 
                 //send message
-                backendHandler.sendMessage(suggestAccuseConfig + "," + suspectValue + "," + characterRoom + "," + weaponValue);
+                backendHandler.sendMessage(suggestAccuseConfig + "," + suspectValue + "," + roomGuess + "," + weaponValue);
             }
         });
 
@@ -129,13 +145,21 @@ public class SuggestionAccusationActivity extends AppCompatActivity {
 
     private void setSuggestAccuse(int i){
         TextView suggestAccuseLabel = (TextView) findViewById(R.id.suggestionAccusationText);
+        TextView roomLabel = (TextView) findViewById(R.id.roomLabelText);
+        Spinner roomSpinner = (Spinner) findViewById(R.id.roomSpinner);
+        roomLabel.setVisibility(View.INVISIBLE);
+        roomSpinner.setVisibility(View.INVISIBLE);
+
 
         if(i == 1){
             suggestAccuseLabel.setText("Make a suggestion...");
             suggestAccuseConfig = 3;
+            roomLabel.setVisibility(View.VISIBLE);
+
         }else if (i ==2){
             suggestAccuseLabel.setText("Make an accusation...");
             suggestAccuseConfig = 4;
+            roomSpinner.setVisibility(View.VISIBLE);
         }
 
     }

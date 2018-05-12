@@ -29,7 +29,7 @@ public class TextBased extends AppCompatActivity {
         EditText commandLine = (EditText) findViewById(R.id.commandEntry);
         String command = commandLine.getText().toString();
         //responses = "Me: " + command + "\n" + responses;
-        BackendHandlerReference.addToServerLog(command, "me");
+        //BackendHandlerReference.addToServerLog(command, "me");
 
         TextView responseHistory = (TextView) findViewById(R.id.serverResponsesHistory);
         responseHistory.setText(BackendHandlerReference.getServerLog());

@@ -9,16 +9,16 @@
     <string name="characterSelectReady">Ready?</string>
     <string name="characterSelectBack">Back</string>
     <string name="title_activity_game_board">GameBoard</string>
-    <string name="room1">GameBoard</string>
-    <string name="room2">GameBoard</string>
-    <string name="room3">GameBoard</string>
-    <string name="room4">GameBoard</string>
-    <string name="room5">GameBoard</string>
-    <string name="room6">GameBoard</string>
-    <string name="room7">GameBoard</string>
-    <string name="room8">GameBoard</string>
-    <string name="room9">GameBoard</string>
-    <string name="finished">finished</string>
+    <string name="room1">Study</string>
+    <string name="room2">Great Hall</string>
+    <string name="room3">Lounge</string>
+    <string name="room4">Library</string>
+    <string name="room5">Billiard Room</string>
+    <string name="room6">Dining Room</string>
+    <string name="room7">Conservatory</string>
+    <string name="room8">Ballroom</string>
+    <string name="room9">Kitchen</string>
+    <string name="finished">Finish</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

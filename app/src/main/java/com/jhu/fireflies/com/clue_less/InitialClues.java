@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class InitialClues extends AppCompatActivity {
 
     @Override
@@ -24,10 +27,12 @@ public class InitialClues extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-
-
                 String msgFromServer = (String) msg.getData().get("messageFromServer");
-                Toast.makeText(InitialClues.this, msgFromServer, Toast.LENGTH_SHORT).show();
+                List<String> messageList = Arrays.asList(msgFromServer.split(","));
+                //return if this message isn't for us
+                return; //I don't think this class needs a handler
+                //if(messageList.get(0) != "-3");
+
             }
         };
         backendHandler.setMainMenuHandler(handler);

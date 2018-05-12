@@ -8,11 +8,15 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LobbyActivity extends AppCompatActivity {
     private int characterIndex;
@@ -34,10 +38,19 @@ public class LobbyActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String msgFromServer = (String) msg.getData().get("messageFromServer");
+                List<String> messageList = Arrays.asList(msgFromServer.split(","));
+                //return if this message isn't for us
+                Log.d("LobbyActivity", messageList.get(0));
+                if((messageList.get(0).compareTo("1") != 0) && (messageList.get(0).compareTo("0") != 0) && (messageList.get(0).compareTo("gamestarted") != 0)){
+                    Log.d("LobbyActivity", "Skipped the handler");
+                    return;
+                }
+
+
                 Toast.makeText(LobbyActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
 
                 //if someone else hits start button
-                if(msgFromServer == "startgame"){
+                if(msgFromServer == "gamestarted"){
                     Intent intent = new Intent(LobbyActivity.this,
                             StartOfGame.class);
 
@@ -90,7 +103,18 @@ public class LobbyActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("CharacterDetails", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("characterIndex", characterIndex);
-
+                String room = "";
+                //hard code switch state for the default character rooms
+                switch(characterIndex){
+                    case 0: room = "Study"; break;
+                    case 1: room = "Lounge"; break;
+                    case 2: room = "Library"; break;
+                    case 3: room = "Dining Room"; break;
+                    case 4: room = "Conservatory"; break;
+                    case 5: room = "Kitchen"; break;
+                }
+                editor.putString("characterRoom", room);
+                editor.commit();
             }
         });
 

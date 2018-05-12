@@ -20,8 +20,8 @@ public class BackendHandlerReference {
         return serverLog;
     }
 
-    public static void addToServerLog(String command, String who){
-        BackendHandlerReference.serverLog = who + ": " + command + "\n" + BackendHandlerReference.serverLog;
+    public static void addToServerLog(String command){
+        BackendHandlerReference.serverLog = command + "\n" + BackendHandlerReference.serverLog;
     }
 
     public static  synchronized  BackendHandler getBackendHandler(){

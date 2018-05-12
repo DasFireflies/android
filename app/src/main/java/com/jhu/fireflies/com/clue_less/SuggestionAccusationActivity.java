@@ -59,6 +59,7 @@ public class SuggestionAccusationActivity extends AppCompatActivity {
                 Toast.makeText(SuggestionAccusationActivity.this, test, Toast.LENGTH_SHORT).show();
 
 
+                //send message
                 backendHandler.sendMessage(suggestAccuseConfig + "," + suspectValue + "," + characterRoom + "," + weaponValue);
             }
         });
@@ -74,24 +75,49 @@ public class SuggestionAccusationActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-
                 String msgFromServer = (String) msg.getData().get("messageFromServer");
                 List<String> messageList = Arrays.asList(msgFromServer.split(","));
+                //return if this message isn't for us
+                if(messageList.get(0).compareTo("-3") != 0 && messageList.get(0).compareTo("4") != 0){return;}
+
+                if (messageList.get(0).compareTo("-3") == 0) {
+                    String message;
+                    if (messageList.get(1).compareTo("0") == 0) {
+                        //if your suggestion was not disproved
+                        message = "No one was able to disprove your suggestion";
+                    }
+                    else {
+                        //if your suggestion was disproved
+                        message = messageList.get(2)+" disproved your suggestion by showing you the card: " +messageList.get(3);
+                    }
+                    BackendHandlerReference.addToServerLog(message);
+                }else if (messageList.get(0).compareTo("4") == 0) {
+                    String message;
+                    if (messageList.get(2).compareTo("0") == 0) {
+                        //if accusation was incorrect
+                        message = messageList.get(1) + " made an incorrect accusation. They lose";
+                    }
+                    else {
+                        //if accusation was correct
+                        message = messageList.get(1) + " made a correct accusation. They win!!!!!!!!!!!!!!!!!!! The correct answer was that " + messageList.get(3)+" did it in the "+messageList.get(4)+" with the "+messageList.get(5);
+                    }
+                    BackendHandlerReference.addToServerLog(message);
+                }
 
                 String disprovedCard = "Suggestion not disproved";
                 if(messageList.size()>2){
-                    disprovedCard = messageList.get(2);
+                    disprovedCard = messageList.get(3);
                 }
 
-                String playerWhoDisproved = messageList.get(1);
+
+                String playerWhoDisproved = messageList.get(2);
                 String disproveMessage;
-                if(playerWhoDisproved == "0"){
+                if(playerWhoDisproved == ""){
                     disproveMessage = "No one was able to disprove your suggestion of " + suspectValue + " with the " + weaponValue + " in the " + characterRoom;
                 }else{
                     disproveMessage = "Player " + playerWhoDisproved + " showed you " + disprovedCard;
                 }
 
-                BackendHandlerReference.addToServerLog("server", disproveMessage);
                 Toast.makeText(SuggestionAccusationActivity.this, disproveMessage, Toast.LENGTH_SHORT).show();
 
             }

@@ -63,19 +63,62 @@ public class GameBoard extends AppCompatActivity
 
                 //return if message isn't for this acitivity
                 //check first index of messageList. If the number isn't relevant to this class, return.
+                if(messageList.get(0).compareTo("5") != 0 && messageList.get(0).compareTo("3") != 0 && messageList.get(0).compareTo("2") != 0 && messageList.get(0).compareTo("22") != 0){return;}
+
+                if (messageList.get(0).compareTo("3") == 0) {
+                    String message = messageList.get(1)+" suggested that "+messageList.get(2)+" did it in the "+messageList.get(3)+" with the "+messageList.get(4)+". ";
+                    if (messageList.get(5).compareTo("") == 0) {
+                        message = message + "No one was able to disprove the suggestion";
+                    }
+                    else {
+                        message = message + messageList.get(5) + " disproved the suggestion";
+                    }
+                    BackendHandlerReference.addToServerLog(message);
+                }else if (messageList.get(0).compareTo("5") == 0) {
+                    BackendHandlerReference.addToServerLog("It is your move...");
+                }
+                else if (messageList.get(0).compareTo("2") == 0) {
+                    //character moved location
+                    BackendHandlerReference.addToServerLog(messageList.get(1)+" moved into "+messageList.get(2));
+                }
+                else if (messageList.get(0).compareTo("22") == 0) {
+                    //character moved location
+                    BackendHandlerReference.addToServerLog(messageList.get(1)+" was moved into "+messageList.get(2)+" by a suggestion");
+                }
+
+                if(messageList.get(0).compareTo("2") == 0 || messageList.get(0).compareTo("22") == 0) {
+                    String character = messageList.get(1);
+                    String room = messageList.get(2);
+
+                    //move character into room
+                    move(character, room);
+                    //the only difference between 2 and 22 is that 2 means the player moved
+                    //their own piece their. 22 means their piece was moved by someone
+                    //making a suggestion. this should only affect what is written in the
+                    //activity log
+                }
+
+                if(messageList.get(0).compareTo("5") == 0) {
+                    //this means it is your turn and the server is waiting for a move
+                    //call function to activate buttons
+                    startTurn();
+
+                    String you_were_just_moved_by_a_suggestion = messageList.get(1);
+                    //this is "0" or "1" for False/True. If this value is "1" then
+                    //you can begin your move by making a suggestion. Otherwise you
+                    //must begin your move by moving or making an accusation
+                    String your_location = messageList.get(2);
+
+                    //im not sure what to do with the above pieces 2 of info ^^^
+                }
 
                 //log messages
-                BackendHandlerReference.addToServerLog("Server", "Message");
-
+                //BackendHandlerReference.addToServerLog("Server", "Message");
 
             }
         };
-        backendHandler.setGameboardHandler(handler);
 
-        //send to server
-        backendHandler.sendMessage("send stuff");
-        //log messages
-        BackendHandlerReference.addToServerLog("Me", "Message");
+        backendHandler.setGameboardHandler(handler);
 
         //Get Character Index
         sharedPreferences = getApplicationContext().getSharedPreferences("CharacterDetails", Context.MODE_PRIVATE);
@@ -148,7 +191,24 @@ public class GameBoard extends AppCompatActivity
         halls.put("Hall 12", "None");
     }
 
+    // Pulls the last state of the positions Hash Map
+    @Override
+    protected void onResume() {
+        super.onResume();
+        positions = loadMap();
 
+        // Move the players into their last position
+        for (HashMap.Entry<String, String> positions : halls.entrySet()) {
+            move(positions.getKey(), positions.getValue());
+        }
+    }
+
+    // Saves the state of the positions Hash Map
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveMap(positions);
+    }
 
     @Override
     public void onBackPressed() {
@@ -216,7 +276,7 @@ public class GameBoard extends AppCompatActivity
             startActivity(i);
         }else if (id == R.id.nav_activityLog) {
             Intent i = (Intent) new Intent(GameBoard.this,
-                    TextBased.class);
+                    ActivityLog.class);
             startActivity(i);
         }
 
@@ -255,6 +315,9 @@ public class GameBoard extends AppCompatActivity
         Button hall10 = (Button) findViewById(R.id.hall10);
         Button hall11 = (Button) findViewById(R.id.hall11);
         Button hall12 = (Button) findViewById(R.id.hall12);
+        Button suggestion = (Button) findViewById(R.id.nav_suggestion);
+        Button accusation = (Button) findViewById(R.id.nav_acuse);
+
 
         switch (characterPosition){
             case "Study":
@@ -399,6 +462,9 @@ public class GameBoard extends AppCompatActivity
                 kitchen.setEnabled(true);
                 break;
         }
+
+        accusation.setEnabled(true);
+        suggestion.setEnabled(true);
     }
 
     // Disable the buttons when the turn is finished
@@ -425,6 +491,8 @@ public class GameBoard extends AppCompatActivity
         Button hall10 = (Button) findViewById(R.id.hall10);
         Button hall11 = (Button) findViewById(R.id.hall11);
         Button hall12 = (Button) findViewById(R.id.hall12);
+        Button suggestion = (Button) findViewById(R.id.nav_suggestion);
+        Button accusation = (Button) findViewById(R.id.nav_acuse);
 
         switch (characterPosition){
             case "Study":
@@ -527,6 +595,9 @@ public class GameBoard extends AppCompatActivity
                 kitchen.setEnabled(false);
                 break;
         }
+
+        accusation.setEnabled(false);
+        suggestion.setEnabled(false);
     }
 
     // Room click action
@@ -633,15 +704,14 @@ public class GameBoard extends AppCompatActivity
 
     // End the players current turn
     private void enableFinishButton(String player, String room){
-        Button finish = (Button) findViewById(R.id.finish_button);
+        final Button finish = (Button) findViewById(R.id.finish_button);
         finish.setVisibility(View.VISIBLE);
 
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GameBoard.this, "Calling the server", Toast.LENGTH_SHORT).show();
-                // TODO Call the backend, player is finished
-                // TODO Send the backend who moved and where
+                finish.setVisibility(View.INVISIBLE);
+                backendHandler.sendMessage("-1");
             }
         });
     }

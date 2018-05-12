@@ -1,6 +1,8 @@
 package com.jhu.fireflies.com.clue_less;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.constraint.ConstraintSet;
@@ -12,6 +14,8 @@ import android.widget.Button;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -21,6 +25,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 import java.util.Set;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -52,6 +57,23 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        Button newGame = (Button) findViewById(R.id.newGame);
+
+        joinGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*Put code to reset all shared preferences to defaults
+                 *
+                 */
+
+                Intent intent = new Intent(MainMenuActivity.this,
+                        LobbyActivity.class);
+
+                startActivity(intent);
+
+            }
+        });
+
 
         backendHandler = new BackendHandler();
 
@@ -63,7 +85,8 @@ public class MainMenuActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String msgFromServer = (String) msg.getData().get("messageFromServer");
-                Toast.makeText(MainMenuActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
+                return;
+                //Toast.makeText(MainMenuActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
             }
         };
         backendHandler.setMainMenuHandler(handler);
@@ -97,6 +120,27 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void setSharedPreferencesDefaults(){
         //Put code for saving defaults here
+        HashMap<String, String> positions = new HashMap<>();
+        positions.put("Baron Green", "Study");
+        positions.put("Lady Peacock", "Lounge");
+        positions.put("Madam White", "Library");
+        positions.put("Lady Scarlet", "Dining Room");
+        positions.put("Dr. Plum", "Conservatory");
+        positions.put("General Mustard", "Kitchen");
+        saveMap(positions);
+
+    }
+
+    private void saveMap(HashMap<String,String> inputMap){
+        SharedPreferences pSharedPref = getApplicationContext().getSharedPreferences("MyVariables", Context.MODE_PRIVATE);
+        if (pSharedPref != null){
+            JSONObject jsonObject = new JSONObject(inputMap);
+            String jsonString = jsonObject.toString();
+            SharedPreferences.Editor editor = pSharedPref.edit();
+            editor.remove("Positions").commit();
+            editor.putString("Positions", jsonString);
+            editor.commit();
+        }
     }
 
 }

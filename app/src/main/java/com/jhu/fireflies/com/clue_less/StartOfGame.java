@@ -52,12 +52,12 @@ public class StartOfGame extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String msgFromServer = (String) msg.getData().get("messageFromServer");
-                Toast.makeText(StartOfGame.this, msgFromServer, Toast.LENGTH_SHORT).show();
-
-                int numberOfPlayers;
                 List<String> messageList = Arrays.asList(msgFromServer.split(","));
+                //return if this message isn't for us
+                if(messageList.get(0).compareTo("9") != 0){return;}
 
-                if(messageList.get(0) != "9"){return;}
+                Toast.makeText(StartOfGame.this, msgFromServer, Toast.LENGTH_SHORT).show();
+                int numberOfPlayers;
 
                 try{
                     numberOfPlayers = Integer.parseInt(messageList.get(1));

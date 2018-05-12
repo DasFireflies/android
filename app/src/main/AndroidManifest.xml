@@ -28,7 +28,8 @@
         <activity android:name=".StartOfGame" />
         <activity android:name=".SuggestionAccusationActivity" />
         <activity android:name=".TextBased" />
-        <activity android:name=".InitialClues"></activity>
+        <activity android:name=".InitialClues" />
+        <activity android:name=".ActivityLog"></activity>
     </application>
 
 </manifest>

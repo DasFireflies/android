@@ -35,7 +35,7 @@ public class InitialClues extends AppCompatActivity {
 
             }
         };
-        backendHandler.setMainMenuHandler(handler);
+        backendHandler.setInitialCluesHandler(handler);
 
         String initialClues = "";
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("StartOfGame", Context.MODE_PRIVATE);

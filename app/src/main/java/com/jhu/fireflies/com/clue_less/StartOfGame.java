@@ -56,7 +56,7 @@ public class StartOfGame extends AppCompatActivity {
                 //return if this message isn't for us
                 if(messageList.get(0).compareTo("9") != 0){return;}
 
-                Toast.makeText(StartOfGame.this, msgFromServer, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(StartOfGame.this, msgFromServer, Toast.LENGTH_SHORT).show();
                 int numberOfPlayers;
 
                 try{
@@ -92,7 +92,7 @@ public class StartOfGame extends AppCompatActivity {
                 editor.commit();
             }
         };
-        backendHandler.setMainMenuHandler(handler);
+        backendHandler.setStartOfGameHandler(handler);
 
         /*setPlayerText(1, 5);
         setPlayerText(2, 4);

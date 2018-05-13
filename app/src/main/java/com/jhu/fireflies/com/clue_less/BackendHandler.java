@@ -11,6 +11,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -58,8 +60,8 @@ public class BackendHandler {
     public void setInitialCluesHandler(Handler in){initialCluesHandler = in;}
     public void setStartOfGameHandler(Handler in){startOfGameHandler = in;}
     public void setSuggestionAccusationHandler(Handler in){suggestionAccusationHandler = in;}
-    public void setTextBasedHandler(Handler in){textBasedHandler = in;}
-    public void setActivityLogHandler(Handler in){activityLogHandler = in;}
+    /*public void setTextBasedHandler(Handler in){textBasedHandler = in;}
+    public void setActivityLogHandler(Handler in){activityLogHandler = in;}*/
 
     public void sendMessage(String s){
 
@@ -150,18 +152,18 @@ public class BackendHandler {
                         bundleStartOfGame.putString("messageFromServer", response);
                         Message msgStartOfGame = new Message();
                         msgStartOfGame.setData(bundleStartOfGame);
-                        if(MainMenuHandler != null){
-                            MainMenuHandler.sendMessage(msgStartOfGame);
+                        if(startOfGameHandler != null){
+                            startOfGameHandler.sendMessage(msgStartOfGame);
                         }
                         //Suggestion Accusation Handler
                         Bundle bundleSuggestionAccustation = new Bundle();
                         bundleSuggestionAccustation.putString("messageFromServer", response);
                         Message msgSuggestionAccusation = new Message();
                         msgSuggestionAccusation.setData(bundleSuggestionAccustation);
-                        if(lobbyHandler != null){
-                            lobbyHandler.sendMessage(msgSuggestionAccusation);
+                        if(suggestionAccusationHandler != null){
+                            suggestionAccusationHandler.sendMessage(msgSuggestionAccusation);
                         }
-                        //Text Based Handler
+                        /*//Text Based Handler
                         Bundle bundleTextBased = new Bundle();
                         bundleTextBased.putString("messageFromServer", response);
                         Message msgTextBased = new Message();
@@ -176,7 +178,7 @@ public class BackendHandler {
                         msgActivityLog.setData(bundleActivityLog);
                         if(lobbyHandler != null){
                             lobbyHandler.sendMessage(msgActivityLog);
-                        }
+                        }*/
 
 
                         //Do reader code

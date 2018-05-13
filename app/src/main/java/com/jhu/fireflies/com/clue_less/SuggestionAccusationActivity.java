@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -96,6 +97,7 @@ public class SuggestionAccusationActivity extends AppCompatActivity {
                 //return if this message isn't for us
                 if(messageList.get(0).compareTo("-3") != 0 && messageList.get(0).compareTo("4") != 0){return;}
 
+                Log.d("SuggestionAccustion", messageList.get(0));
                 if (messageList.get(0).compareTo("-3") == 0) {
                     String message;
                     if (messageList.get(1).compareTo("0") == 0) {
@@ -117,24 +119,9 @@ public class SuggestionAccusationActivity extends AppCompatActivity {
                         //if accusation was correct
                         message = messageList.get(1) + " made a correct accusation. They win!!!!!!!!!!!!!!!!!!! The correct answer was that " + messageList.get(3)+" did it in the "+messageList.get(4)+" with the "+messageList.get(5);
                     }
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     BackendHandlerReference.addToServerLog(message);
                 }
-
-                String disprovedCard = "Suggestion not disproved";
-                if(messageList.size()>2){
-                    disprovedCard = messageList.get(3);
-                }
-
-
-                String playerWhoDisproved = messageList.get(2);
-                String disproveMessage;
-                if(playerWhoDisproved == ""){
-                    disproveMessage = "No one was able to disprove your suggestion of " + suspectValue + " with the " + weaponValue + " in the " + characterRoom;
-                }else{
-                    disproveMessage = "Player " + playerWhoDisproved + " showed you " + disprovedCard;
-                }
-
-                Toast.makeText(SuggestionAccusationActivity.this, disproveMessage, Toast.LENGTH_SHORT).show();
 
             }
         };

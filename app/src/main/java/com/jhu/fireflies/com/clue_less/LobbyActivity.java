@@ -47,7 +47,7 @@ public class LobbyActivity extends AppCompatActivity {
                 }
 
 
-                Toast.makeText(LobbyActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LobbyActivity.this, msgFromServer, Toast.LENGTH_SHORT).show();
 
                 //if someone else hits start button
                 if(msgFromServer.compareTo("gamestarted") == 0){
@@ -92,7 +92,7 @@ public class LobbyActivity extends AppCompatActivity {
 
                 //toggleReadyButton();
 
-                Toast.makeText(getApplicationContext(), selectedCharacter.getText(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), selectedCharacter.getText(), Toast.LENGTH_SHORT).show();
                 /*selectedCharacter.setText("Selected Character");
                 disableCharacterSelect();
                 disbableAllCharacterSelection();*/
